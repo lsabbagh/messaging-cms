@@ -1,0 +1,16 @@
+const addNewUser = () => {
+
+    return (
+      <div>
+        <form action="" method="POST">
+          <input type="text" placeholder="username" name="username" />
+          <input type="email" placeholder="email" name="email" />
+          <input type="text" placeholder="password" name="password" />
+          <input type="text" placeholder="first name" name="firstName" />
+          <input type="text" placeholder="last name" name="lastName" />
+          <input type="text" placeholder="last name" name="lastName" />
+          <input type="text" placeholder="gender" name="gender" />
+        </form>
+      </div>
+    )
+  }
