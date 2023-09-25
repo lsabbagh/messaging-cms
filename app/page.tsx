@@ -3,12 +3,13 @@
 import Users from "./users";
 import App from "./app";
 
+import 'antd/dist/antd'
 
 export default function Home() {
   return (
     <main>
       <Users />
-      <App />
+      {/* <App /> */}
     </main>
   )
 }

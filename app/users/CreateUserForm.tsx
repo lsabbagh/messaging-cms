@@ -89,7 +89,7 @@ const CreateUser = () => {
       <Form.Item<FieldType>
         label="Phone"
         name="phone"
-        rules={[{ required: true, message: "Please input your phone!" }]}
+        rules={[{ required: false, message: "Please input your phone!" }]}
       >
         <Input />
       </Form.Item>
@@ -97,7 +97,7 @@ const CreateUser = () => {
       <Form.Item<FieldType>
         label="Gender"          //jnbacivbnswviswnbvi CHECK THIS 
         name="gender"
-        rules={[{ required: true, message: "Please input your phone!" }]}
+        rules={[{ required: false, message: "Please input your phone!" }]}
       >
         <Select
           placeholder="Select an option"
@@ -111,7 +111,7 @@ const CreateUser = () => {
       <Form.Item<FieldType>
         label="Country"         //sbnhjwsbvhw CHECK THIS
         name="country"
-        rules={[{ required: true, message: "Please input your phone!" }]}
+        rules={[{ required: false, message: "Please input your phone!" }]}
       >
         <Input />
       </Form.Item>
