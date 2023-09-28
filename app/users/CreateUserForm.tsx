@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 
-type FieldType = {
+export type FieldType = {
   username?: string;
   password?: string;
   email?: string;
