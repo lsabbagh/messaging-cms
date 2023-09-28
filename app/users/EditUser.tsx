@@ -1,20 +1,26 @@
-import React from "react";
+import React, { use } from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { FieldType } from "./CreateUserForm";
 
 
-const EditUser = () => {
+const EditUser = ({user}: any) => {
 
-    const onFinish = async (user: any) => {
+    const onFinish = async (_user: any) => {
+
+        console.log('1111',user);
+        
+        const {username,  email} = _user; 
+        const updatedUser = {username, email}
         const response = await fetch("http://localhost:5000/api/users/" + user._id, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "access-control-allow-origin": "*",
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(updatedUser)
         });
         console.log("Success:", user);
+        console.log("Success2:", updatedUser);
         const data = await response.json();
         return data;
     };
@@ -30,7 +36,7 @@ const EditUser = () => {
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
+            initialValues={{ remember: true , ...user}}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -41,14 +47,6 @@ const EditUser = () => {
                 rules={[{ required: true, message: "Please input your username!" }]}
             >
                 <Input />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: "Please input your password!" }]}
-            >
-                <Input.Password />
             </Form.Item>
 
             <Form.Item<FieldType>

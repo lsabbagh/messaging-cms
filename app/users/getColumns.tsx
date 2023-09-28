@@ -74,7 +74,7 @@ const getColumns = (onDelete, onEdit) => [
         >
           <Button type="primary">Delete</Button>
         </Popconfirm>
-        <Popover content={<EditUser />} title='edit user'>
+        <Popover content={<EditUser user={record}/>} title='edit user'>
           <Button onClick={() => { onEdit(record), console.log('....', 'record', record._id) }} type="text">Edit</Button>
         </Popover>
 

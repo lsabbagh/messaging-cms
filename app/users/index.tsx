@@ -32,7 +32,7 @@ const Users: React.FC = () => {
   }
 
   const headerStyle: React.CSSProperties = {
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#fff',
     height: 64,
     paddingInline: 50,
@@ -52,24 +52,28 @@ const Users: React.FC = () => {
     backgroundColor: '#7dbcea',
   };
   const siderStyle: React.CSSProperties = {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     textAlign: 'center',
     lineHeight: '120px',
     color: '#fff',
     backgroundColor: '#fff',
     verticalAlign: 'middle',
     alignItems: 'center',
-    alignSelf: 'auto'
   };
+
+  // css of siderStyle is not working there is a div in the app that it's not present here
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
       <Layout style={{ width: '100%'}}>
-        <Header style={headerStyle}>Header</Header>
+        <Header style={headerStyle}>Users</Header>
 
-        <Layout hasSider>
+        <Layout hasSider style={{width: '100%'}}>
 
           <Sider style={siderStyle}>
-            <Popover content={<CreateUser />} title="Add New User">
+            <Popover content={<CreateUser />} title="Add New User" style={{width: '100%'}}>
               <Button type="primary">Add New User</Button>
             </Popover>
           </Sider>
