@@ -5,6 +5,7 @@ import getColumns from "./getColumns";
 import CreateUser from "./CreateUserForm"
 import SignInForm from "./SignInForm"
 import EditUser from "./EditUser";
+import styles from '@/app/styles/users.module.css'
 
 
 
@@ -26,72 +27,73 @@ const Users: React.FC = () => {
     deleteUser(user)
     setData(data);
     console.log('....', user)
-  } 
+  }
   const onEdit = (user) => {
     console.log('....', user)
   }
 
   const headerStyle: React.CSSProperties = {
-    textAlign: 'left',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'relative',
+    // textAlign: 'left',
     color: '#fff',
     height: 64,
     paddingInline: 50,
     lineHeight: '64px',
-    // backgroundColor: '#7dbcea',
+    backgroundColor: '#526D82',
+    // backgroundColor: '#96B6C5',
+    fontWeight: 'bolder',
+    fontSize: '25px',
   };
   const contentStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    alignContent: 'center',
     textAlign: 'center',
     minHeight: 120,
     lineHeight: '120px',
     color: '#fff',
-    // backgroundColor: '#108ee9',
+    // backgroundColor: 'red',
   };
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#7dbcea',
-  };
-  const siderStyle: React.CSSProperties = {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    textAlign: 'center',
-    lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: '#fff',
-    verticalAlign: 'middle',
-    alignItems: 'center',
+    backgroundColor: '#526D82',
+    lineHeight: '64px',
+    height: 64,
   };
 
   // css of siderStyle is not working there is a div in the app that it's not present here
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-      <Layout style={{ width: '100%'}}>
-        <Header style={headerStyle}>Users</Header>
+    <div className={styles.container}>
+      <Layout className={styles.layout}>
+        <Header style={headerStyle}>
+          <div className={styles.users}>
+            Users
+          </div>
+          <Popover content={<CreateUser />} title="Add New User">
+            <Button type="primary" className={styles.addNewUserBut}>Add New User</Button>
+          </Popover>
+        </Header>
 
-        <Layout hasSider style={{width: '100%'}}>
+        <Content style={contentStyle}>
+          <div className={styles.table}>
+            <Table columns={getColumns(onDelete, onEdit)} dataSource={data} footer={() => (<div style={{ textAlign: 'center' }}></div>)} />
+          </div>
+        </Content>
 
-          <Sider style={siderStyle}>
-            <Popover content={<CreateUser />} title="Add New User" style={{width: '100%'}}>
-              <Button type="primary">Add New User</Button>
-            </Popover>
-          </Sider>
-
-          <Content style={contentStyle}>
-            <div style={{ width: 800, border: '1px solid black', padding: 10 }}>
-              <Table columns={getColumns(onDelete, onEdit)} dataSource={data} />
-            </div>
-          </Content>
-        </Layout>
-
-        <Footer style={footerStyle}>Footer</Footer>
+        <Footer style={footerStyle}></Footer>
 
       </Layout>
 
       <br />
 
-      <div style={{ width: 200, border: '1px solid black', padding: 10, margin: 5 }}>
+      <div className={styles.signInForm}>
         <SignInForm />
       </div>
 

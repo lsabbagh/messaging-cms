@@ -15,7 +15,7 @@ const getColumns = (onDelete, onEdit) => [
     title: "Name",
     dataIndex: "username",
     key: "name",
-    // render: (text) => <a>{text}</a>,
+    render: (text) => <span style={{fontWeight: 'bolder'}}>{text}</span>,
   },
   {
     title: "Email",

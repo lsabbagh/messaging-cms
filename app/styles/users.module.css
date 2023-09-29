@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.layout {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 100vh;
+}
+
+.users {
+    left: 10px;
+    position: relative;
+}
+
+.addNewUserBut {
+    position: relative;
+    top: 25%;
+    right: 12%;
+}
+
+.table {
+    width: 800;
+    border: 1px solid black;
+    padding: 10;
+}
+
+.signInForm {
+    width: 200;
+    border: 1px solid black;
+    padding: 10;
+    margin: 5;
+}
