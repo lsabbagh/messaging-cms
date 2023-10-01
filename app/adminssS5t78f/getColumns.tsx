@@ -1,6 +1,6 @@
 import type { ColumnsType } from "antd/es/table";
 import { Button, Popconfirm, Popover } from 'antd';
-import EditUser from "./EditUser";
+import EditAdmin from "./EditAdmin";
 
 interface DataType {
   key: string;
@@ -74,7 +74,7 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
         >
           <Button type="primary">Delete</Button>
         </Popconfirm>
-        <Popover content={<EditUser user={record}/>} title='edit user'>
+        <Popover content={<EditAdmin admin={record}/>} title='edit admin'>
           <Button onClick={() => { onEdit(record), console.log('....', 'record', record._id) }} type="text">Edit</Button>
         </Popover>
 

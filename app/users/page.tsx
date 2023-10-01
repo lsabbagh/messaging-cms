@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
@@ -11,7 +12,6 @@ import styles from '@/app/styles/users.module.css'
 
 const Users: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
-  const [editingUser, setEditingUser] = React.useState</*DataType | null*/boolean>(false);
   // console.log("...1",deletedRow);
 
   const fetchUsers = async () => {
@@ -23,12 +23,12 @@ const Users: React.FC = () => {
     fetchUsers();
     // console.log("...", data);
   }, [data]);
-  const onDelete = (user) => {
+  const onDelete = (user: Object) => {
     deleteUser(user)
     setData(data);
     console.log('....', user)
   }
-  const onEdit = (user) => {
+  const onEdit = (user: Object) => {
     console.log('....', user)
   }
 
@@ -67,8 +67,6 @@ const Users: React.FC = () => {
     height: 64,
   };
 
-  // css of siderStyle is not working there is a div in the app that it's not present here
-
   return (
     <div className={styles.container}>
       <Layout className={styles.layout}>
@@ -96,9 +94,6 @@ const Users: React.FC = () => {
       <div className={styles.signInForm}>
         <SignInForm />
       </div>
-
-      {/* <div style={{ width: 200, border: '1px solid black', padding: 10, margin: 5 }}>
-      </div> */}
 
     </div>
   );
