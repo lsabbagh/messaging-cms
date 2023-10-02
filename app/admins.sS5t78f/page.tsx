@@ -1,6 +1,5 @@
 'use client';
 import React from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 import getColumns from './getColumns';
@@ -12,31 +11,15 @@ import styles from '@/app/styles/users.module.css'
 const Admins: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
 
-  const searchParams = useSearchParams();
-  const _username = searchParams.get('data')
-
-  // const router = useRouter();
-  // const _username = router.query; // Fetch the admin ID from the URL
-
-  // React.useEffect(() => {
-  //     if (id) {
-  //         console.log('Fetching data for admin ID:', id);
-  //         // Fetch data or perform actions specific to the admin with this ID
-  //     }
-  // }, [id]);
-
-  
-  // console.log("...1",deletedRow);
-
   const fetchAdmins = async () => {
     const admins = await getAdmins();
     setData(admins);
   };
 
-  React.useEffect(() => {
-    fetchAdmins();
-    // console.log("...", data);
-  }, [data]);
+  // React.useEffect(() => {
+  //   fetchAdmins();
+  //   // console.log("...", data);
+  // }, [data]);
 
   const onDelete = (admin: object) => {
     deleteAdmin(admin)
@@ -85,7 +68,7 @@ const Admins: React.FC = () => {
     verticalAlign: 'middle',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   };
 
   return (
@@ -95,7 +78,10 @@ const Admins: React.FC = () => {
           <div className={styles.users}>
             Admins
           </div>
-          <Popover content={<CreateAdmin />} title="Add New Admin">
+          <div>
+            <Button type="primary" onClick={()=>fetchAdmins()}>update list</Button>
+          </div>
+          <Popover content={<CreateAdmin />} title="Add New Admin" trigger='click'>
             <Button type="primary" className={styles.addNewUserBut}>Add New Admin</Button>
           </Popover>
         </Header>
@@ -106,7 +92,7 @@ const Admins: React.FC = () => {
           </div>
         </Content>
 
-        <Footer style={footerStyle}>Admin: {_username}</Footer>
+        <Footer style={footerStyle}>ADMIN: Super Admin</Footer>
 
       </Layout>
 
@@ -116,27 +102,36 @@ const Admins: React.FC = () => {
 
 export default Admins;
 
-const getAdmins = async () => {
+export const Confirm = async () => {
+  const password = prompt('enter the super admin password');
+  const response = await fetch("http://localhost:5000/api/admins/confirm", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "access-control-allow-origin": "*",
+    }, 
+    body: JSON.stringify({password}),
+  })
+
+  const isConfirmed = await response.json();
+  return isConfirmed;
+}
+
+
+const getAdmins = async () => { 
+  const confirm = await Confirm();
+  if(!confirm) return;
+
   const response = await fetch("http://localhost:5000/api/admins/list");
   const data = await response.json();
   return data;
 };
 
 const deleteAdmin = async (admin: any) => {
+  const confirm = await Confirm();
+  if(!confirm) return;
+  
   const response = await fetch("http://localhost:5000/api/admins/" + admin._id, { method: "DELETE" });
   const data = await response.json();
   return data;
 };
-
-// export async function getStaticPaths() {
-//   // Fetch the list of admin IDs from your API
-//   const response = await fetch("http://localhost:5000/api/admins/list");
-//   const data = await response.json();
-
-//   // Generate the paths for each admin
-//   const paths = data.map((admin) => ({
-//     params: { id: admin._id.toString() },
-//   }));
-
-//   return { paths, fallback: false };
-// }

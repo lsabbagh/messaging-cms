@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Confirm } from "./page";
 
 export type FieldType = {
   username?: string;
@@ -20,6 +21,9 @@ const CreateAdmin = () => {
 
 
   const onFinish = async (values: any) => {
+    const confirm = await Confirm();
+    if(!confirm) return;
+
     await fetch("http://localhost:5000/api/admins", {
       method: "POST",
       headers: {
@@ -119,7 +123,7 @@ const CreateAdmin = () => {
       <Form.Item<FieldType>
         label="City"
         name="city"
-        rules={[{ required: false}]}
+        rules={[{ required: false }]}
       >
         <Input />
       </Form.Item>

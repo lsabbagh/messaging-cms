@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 
+
 type FieldType = {
     username?: string;
     password?: string;
@@ -73,7 +74,7 @@ const AdminLogin = () => {
 
 export default AdminLogin
 
-const signIn = async (username: any, password: any) => {
+const signIn = async (username, password) => {
     const response = await fetch("http://localhost:5000/api/admins/signin", {
         method: "POST",
         headers: {

@@ -6,6 +6,7 @@ import getColumns from "./getColumns";
 import CreateUser from "./CreateUserForm"
 import SignInForm from "./SignInForm"
 import EditUser from "./EditUser";
+import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css'
 
 
@@ -13,6 +14,9 @@ import styles from '@/app/styles/users.module.css'
 const Users: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
   // console.log("...1",deletedRow);
+
+  const searchParams = useSearchParams();
+  const _username = searchParams.get('data')
 
   const fetchUsers = async () => {
     const users = await getUsers();
@@ -42,7 +46,7 @@ const Users: React.FC = () => {
     height: 64,
     paddingInline: 50,
     lineHeight: '64px',
-    backgroundColor: '#526D82',
+    backgroundColor: '#bbb',
     // backgroundColor: '#96B6C5',
     fontWeight: 'bolder',
     fontSize: '25px',
@@ -62,9 +66,15 @@ const Users: React.FC = () => {
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#526D82',
+    backgroundColor: '#bbb',
     lineHeight: '64px',
     height: 64,
+    fontSize: '16px',
+    fontWeight: 'bolder',
+    verticalAlign: 'middle',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   };
 
   return (
@@ -85,7 +95,7 @@ const Users: React.FC = () => {
           </div>
         </Content>
 
-        <Footer style={footerStyle}></Footer>
+        <Footer style={footerStyle}>Admin: {_username}</Footer>
 
       </Layout>
 
