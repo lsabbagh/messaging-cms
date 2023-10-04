@@ -3,9 +3,8 @@ import React from "react";
 import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 import getColumns from "./getColumns";
-import CreateUser from "./CreateUserForm"
-import SignInForm from "./SignInForm"
-import EditUser from "./EditUser";
+import CreateGroup from "./CreateGroupForm"
+import EditGroup from "./editGroup";
 import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css'
 
@@ -18,22 +17,22 @@ const Groups: React.FC = () => {
   const searchParams = useSearchParams();
   const _username = searchParams.get('data')
 
-  const fetchUsers = async () => {
-    const users = await getUsers();
+  const fetchGroups = async () => {
+    const groups = await getGroups();
 
-    setData(users);
+    setData(groups);
   };
   React.useEffect(() => {
-    fetchUsers();
+    fetchGroups();
     // console.log("...", data);
   }, [data]);
-  const onDelete = (user: Object) => {
-    deleteUser(user)
+  const onDelete = (group: Object) => {
+    deleteGroup(group)
     setData(data);
-    console.log('....', user)
+    console.log('....', group)
   }
-  const onEdit = (user: Object) => {
-    console.log('....', user)
+  const onEdit = (group: Object) => {
+    console.log('....', group)
   }
 
   const headerStyle: React.CSSProperties = {
@@ -82,44 +81,37 @@ const Groups: React.FC = () => {
       <Layout className={styles.layout}>
         <Header style={headerStyle}>
           <div className={styles.users}>
-            Users
+            Groups
           </div>
-          <Popover content={<CreateUser />} title="Add New User">
-            <Button type="primary" className={styles.addNewUserBut}>Add New User</Button>
+          <Popover content={<CreateGroup />} title="Add New Group">
+            <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
           </Popover>
         </Header>
 
         <Content style={contentStyle}>
           <div className={styles.table}>
-            <Table columns={getColumns(onDelete, onEdit)} dataSource={data} footer={() => (<div style={{ textAlign: 'center' }}></div>)} />
+            <Table columns={getColumns(onDelete, onEdit)} dataSource={data}/>
           </div>
         </Content>
 
         <Footer style={footerStyle}>Admin: {_username}</Footer>
 
       </Layout>
-
-      <br />
-
-      <div className={styles.signInForm}>
-        <SignInForm />
-      </div>
-
     </div>
   );
 };
 
 export default Groups;
 
-const getUsers = async () => {
-  const response = await fetch("http://localhost:5000/api/users/list");
+const getGroups = async () => {
+  const response = await fetch("http://localhost:5000/api/conversation/list/groups");
   const data = await response.json();
   return data;
 };
 
 
-const deleteUser = async (user: any) => {
-  const response = await fetch("http://localhost:5000/api/users/" + user._id, { method: "DELETE" });
+const deleteGroup = async (group: any) => {
+  const response = await fetch("http://localhost:5000/api/conversation/" + group._id, { method: "DELETE" });
   const data = await response.json();
   return data;
 };

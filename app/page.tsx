@@ -18,6 +18,7 @@ export default function Home() {
         <br />
         <br />
         <button onClick={()=>router.push('/users.wj8Gj8Fa0')}>Users directly </button>
+        <button onClick={()=>router.push('/groups.2bD73JdD9')}>Groups directly </button>
         
       </div>
       {/* <Users /> */}

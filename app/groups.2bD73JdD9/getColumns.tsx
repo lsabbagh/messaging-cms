@@ -1,20 +1,20 @@
 import type { ColumnsType } from "antd/es/table";
 import { Button, Popconfirm, Popover } from 'antd';
-import EditAdmin from "./EditAdmin";
+import EditGroup from "./editGroup";
 
 interface DataType {
   key: string;
-  username: string;
-  email: string;
-  age: number;
-  active: boolean;
+  title: string;
+  participants: [];
 }
+
+
 
 const getColumns = (onDelete: Function, onEdit: Function) => [
   {
-    title: "Name",
-    dataIndex: "username",
-    key: "name",
+    title: "Goup Name",
+    dataIndex: "title",
+    key: "title",
     render: (text: string) => <span style={{fontWeight: 'bolder'}}>{text}</span>,
   },
   {
@@ -34,7 +34,7 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
         >
           <Button type="primary">Delete</Button>
         </Popconfirm>
-        <Popover content={<EditAdmin admin={record}/>} title='edit admin'>
+        <Popover content={<EditGroup admin={record}/>} title='edit admin'>
           <Button onClick={() => { onEdit(record), console.log('....', 'record', record._id) }} type="text">Edit</Button>
         </Popover>
 
@@ -48,3 +48,4 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
 ];
 
 export default getColumns;
+
