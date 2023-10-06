@@ -4,7 +4,6 @@ import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Sele
 const { Header, Footer, Sider, Content } = Layout;
 import getColumns from "./getColumns";
 import CreateGroup from "./CreateGroupForm"
-import EditGroup from "./editGroup";
 import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css'
 
@@ -19,22 +18,28 @@ const Groups: React.FC = () => {
 
   const fetchGroups = async () => {
     const groups = await getGroups();
-
     setData(groups);
   };
+
   React.useEffect(() => {
     fetchGroups();
     // console.log("...", data);
-  }, [data]);
+  }, []);
+
   const onDelete = (group: Object) => {
+    console.log('....dleteatt', group);
     deleteGroup(group)
     setData(data);
-    console.log('....', group)
+    console.log('....deletesucc')
   }
   const onEdit = (group: Object) => {
-    console.log('....', group)
+    console.log('....edit', group)
   }
 
+  const getDatafromCreateGroup = (newData: Object) => {
+    console.log('....ddatta', newData);
+    setData(data);
+  }
   const headerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'row',
@@ -83,7 +88,7 @@ const Groups: React.FC = () => {
           <div className={styles.users}>
             Groups
           </div>
-          <Popover content={<CreateGroup />} title="Add New Group">
+          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
             <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
           </Popover>
         </Header>
@@ -104,14 +109,19 @@ const Groups: React.FC = () => {
 export default Groups;
 
 const getGroups = async () => {
-  const response = await fetch("http://localhost:5000/api/conversation/list/groups");
+  const response = await fetch("http://localhost:5000/api/conversation/groups/list");
   const data = await response.json();
+  console.log('....datagrp', data);
   return data;
 };
 
 
 const deleteGroup = async (group: any) => {
-  const response = await fetch("http://localhost:5000/api/conversation/" + group._id, { method: "DELETE" });
+  const id = group._id
+  console.log('....group', id);
+  const response = await fetch("http://localhost:5000/api/conversation/" + id, { method: "DELETE" });
+  console.log('....res');
   const data = await response.json();
+  console.log('....data', data);
   return data;
 };

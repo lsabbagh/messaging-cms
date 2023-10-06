@@ -5,6 +5,7 @@ import { FieldType } from "./CreateUserForm";
 
 const EditUser = ({user}: any) => {
 
+    // console.log('....1st', user);
     const onFinish = async (_user: any) => {
 
         console.log('1111',user);

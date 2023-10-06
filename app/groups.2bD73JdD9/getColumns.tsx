@@ -1,14 +1,12 @@
 import type { ColumnsType } from "antd/es/table";
 import { Button, Popconfirm, Popover } from 'antd';
 import EditGroup from "./editGroup";
+import {propstypes} from './editGroup'
 
-interface DataType {
-  key: string;
-  title: string;
-  participants: [];
+export const editedData = ({title, participants}: propstypes) => {
+  const editedData = {title, participants};
+  return editedData
 }
-
-
 
 const getColumns = (onDelete: Function, onEdit: Function) => [
   {
@@ -34,8 +32,8 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
         >
           <Button type="primary">Delete</Button>
         </Popconfirm>
-        <Popover content={<EditGroup admin={record}/>} title='edit admin'>
-          <Button onClick={() => { onEdit(record), console.log('....', 'record', record._id) }} type="text">Edit</Button>
+        <Popover content={<EditGroup group={record} dataToParent={editedData}/>} title='edit group'>
+          <Button onClick={() => { onEdit(record), console.log('....record', record) }} type="text">Edit</Button>
         </Popover>
 
 

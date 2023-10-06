@@ -7,21 +7,29 @@ export type FieldType = {
   type?: "group";
 };
 
-const CreateGroup = () => {
-    const [users, setUsers] = React.useState<[]>([])
-  const { Option } = Select;
+interface parentData {
+  dataToParent: (data: any) => void; 
+}
 
-  const fetchUsers =async () => {
+const CreateGroup = ({dataToParent}:parentData) => {
+  const [users, setUsers] = React.useState<[]>([]);
+
+  const fetchUsers = async () => {
     const _users = await getUsers();
     setUsers(_users)
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     fetchUsers();
-  }, [users]);
+    // console.log('....uussserrrss', users);
+  }, []);
 
-  const onFinish = async ({title, participants}: FieldType) => {
-    await fetch("http://localhost:5000/api/conversation/groups/", {
+ 
+
+  const onFinish = async ({ title, participants }: FieldType) => {
+    // console.log('....parrp', participants);
+
+    const response = await fetch("http://localhost:5000/api/conversation/groups/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,16 +40,22 @@ const CreateGroup = () => {
         participants,
       })
     });
-    console.log("Success:", title, participants);
+    const data = await response.json();
+    // console.log("....Success:", title, participants);
+    console.log("....Success22:", data);
+    dataToParent(data)
+    return data
   };
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    // console.log("....Failed:", errorInfo);
     alert("ERROR, please try agian...")
   };
 
+  // console.log('....uussserrrss2', users);
+
   return (
     <Form
-      name="basic"
+      name="createGroup"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
@@ -59,28 +73,20 @@ const CreateGroup = () => {
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Participants"          //jnbacivbnswviswnbvi CHECK THIS 
+        label="Participants"
         name="participants"
         rules={[{ required: true, message: "Please select participants!" }]}
       >
-        <Select
-          placeholder="Select an option"
-          allowClear
-        >
-            {users.map((user: any)=>(
-                <Option value={user} key={user?._id}>{user?.username}</Option>
-            ))}
-        </Select>
+        <Select 
+          placeholder="Select an option" 
+          mode="multiple" 
+          allowClear 
+          options={users.map((user: any) => ({
+            value: user?._id,
+            label: user?.username,
+          }))}
+        />
       </Form.Item>
-
-      {/* <Form.Item<FieldType>
-        label="Country"         //sbnhjwsbvhw CHECK THIS make group
-        name="country"
-        rules={[{ required: false, message: "Please input your phone!" }]}
-      >
-        <Input />
-      </Form.Item> */}
-
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
@@ -94,7 +100,8 @@ const CreateGroup = () => {
 export default CreateGroup;
 
 const getUsers = async () => {
-    const response = await fetch("http://localhost:5000/api/users/list");
-    const data = await response.json();
-    return data;
+  const response = await fetch("http://localhost:5000/api/users/list");
+  const data = await response.json();
+  // console.log('....data', data);
+  return data;
 };
