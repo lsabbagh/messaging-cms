@@ -12,10 +12,10 @@ type FieldType = {
 
 const AdminLogin = () => {
 
-    const router =useRouter();
+    const router = useRouter();
     const [admin, setAdmin] = React.useState({});
 
-    const onLogin = async ({ username, password }) => {
+    const onLogin = async ({ username, password }: FieldType) => {
         if (!username) {
             alert('enter your username');
             return;
@@ -74,14 +74,16 @@ const AdminLogin = () => {
 export default AdminLogin
 
 const signIn = async (username: any, password: any) => {
-    const response = await fetch("http://localhost:5000/api/admins/signin", {
+    const response = await fetch("http://localhost:5000/api/users/adminSignin", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "access-control-allow-origin": "*",
+            "Content-Type": "application/json",
+            "access-control-allow-origin": "*",
         },
-        body: JSON.stringify({username, password})
-      })
+        body: JSON.stringify({ username, password })
+    })
+    console.log('....123', response);
     const data = await response.json();
+    console.log('....signIn began', data);
     return data;
-  };
+};

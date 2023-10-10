@@ -5,6 +5,7 @@ export type FieldType = {
   username?: string;
   password?: string;
   email?: string;
+  type?: string;
   active?: string;
   firstName?: string;
   lastName?: string;
@@ -123,6 +124,14 @@ const CreateUser = () => {
       >
         <Input />
       </Form.Item>
+
+      <Form.Item<FieldType>
+      name="type"
+      hidden
+      initialValue="user"
+    >
+      <Input value="user"/>
+    </Form.Item>
 
       <Form.Item<FieldType>
         name="remember"

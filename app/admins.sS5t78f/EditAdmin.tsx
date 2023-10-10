@@ -15,7 +15,7 @@ const EditAdmin = ({ admin }: any) => {
 
         const { username, email } = _admin;
         const updatedAdmin = { username, email }
-        const response = await fetch("http://localhost:5000/api/admins/" + admin._id, {
+        const response = await fetch("http://localhost:5000/api/users/" + admin._id, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

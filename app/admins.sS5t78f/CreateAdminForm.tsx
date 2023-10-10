@@ -6,6 +6,7 @@ export type FieldType = {
   username?: string;
   password?: string;
   email?: string;
+  type?: string;
   active?: string;
   firstName?: string;
   lastName?: string;
@@ -24,7 +25,7 @@ const CreateAdmin = () => {
     const confirm = await Confirm();
     if(!confirm) return;
 
-    await fetch("http://localhost:5000/api/admins", {
+    await fetch("http://localhost:5000/api/users/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,6 +128,14 @@ const CreateAdmin = () => {
       >
         <Input />
       </Form.Item>
+
+      <Form.Item<FieldType>
+      name="type"
+      hidden
+      initialValue="admin"
+    >
+      <Input value="admin"/>
+    </Form.Item>
 
       <Form.Item<FieldType>
         name="remember"

@@ -104,7 +104,7 @@ export default Admins;
 
 export const Confirm = async () => {
   const password = prompt('enter the super admin password');
-  const response = await fetch("http://localhost:5000/api/admins/confirm", {
+  const response = await fetch("http://localhost:5000/api/users/confirm", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -122,8 +122,9 @@ const getAdmins = async () => {
   const confirm = await Confirm();
   if(!confirm) return;
 
-  const response = await fetch("http://localhost:5000/api/admins/list");
+  const response = await fetch("http://localhost:5000/api/users/list/admins");
   const data = await response.json();
+  console.log('....listadmin', data);
   return data;
 };
 
@@ -131,7 +132,7 @@ const deleteAdmin = async (admin: any) => {
   const confirm = await Confirm();
   if(!confirm) return;
   
-  const response = await fetch("http://localhost:5000/api/admins/" + admin._id, { method: "DELETE" });
+  const response = await fetch("http://localhost:5000/api/users/" + admin._id, { method: "DELETE" });
   const data = await response.json();
   return data;
 };

@@ -112,7 +112,7 @@ const Users: React.FC = () => {
 export default Users;
 
 const getUsers = async () => {
-  const response = await fetch("http://localhost:5000/api/users/list");
+  const response = await fetch("http://localhost:5000/api/users/list/users");
   const data = await response.json();
   return data;
 };

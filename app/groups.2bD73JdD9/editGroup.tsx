@@ -9,8 +9,8 @@ import { FieldType } from "./CreateGroupForm";
 //     // dataToParent: (data: any) => void; 
 // }
 export interface propstypes {
-    title: string;
-    participants: Array<string>;
+    title?: string;
+    participants?: Array<string>;
     group: any;
     dataToParent: any//(data: any) => void; 
   }
