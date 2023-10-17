@@ -1,4 +1,3 @@
-import type { ColumnsType } from "antd/es/table";
 import { Button, Popconfirm, Popover } from 'antd';
 import EditUser from "./EditUser";
 

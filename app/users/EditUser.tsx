@@ -1,29 +1,19 @@
-import React, { use } from "react";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import React from "react";
+import { Button, Form, Input } from "antd";
 import { FieldType } from "./CreateUserForm";
+import { editUser } from "../service";
 
 
 const EditUser = ({user}: any) => {
 
     // console.log('....1st', user);
     const onFinish = async (_user: any) => {
-
         console.log('1111',user);
         
         const {username,  email} = _user; 
         const updatedUser = {username, email}
-        const response = await fetch("http://localhost:5000/api/users/" + user._id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "access-control-allow-origin": "*",
-            },
-            body: JSON.stringify(updatedUser)
-        });
-        console.log("Success:", user);
-        console.log("Success2:", updatedUser);
-        const data = await response.json();
-        return data;
+        
+        await editUser({user,updatedUser});
     };
 
     const onFinishFailed = (errorInfo: any) => {

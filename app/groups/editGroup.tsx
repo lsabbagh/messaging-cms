@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { FieldType } from "./CreateGroupForm";
+import { getUsers, editGroup } from "../service";
 
 // type propstypes = {
 //     title: string;
@@ -13,7 +14,7 @@ export interface propstypes {
     participants?: Array<string>;
     group: any;
     dataToParent: any//(data: any) => void; 
-  }
+}
 
 const EditGroup = ({ group, dataToParent }: propstypes) => {
     const oldPart = group.participants.split(',')
@@ -31,25 +32,13 @@ const EditGroup = ({ group, dataToParent }: propstypes) => {
         console.log('....grp', users);
     }, []);
 
-    const onFinish = async ({ title, participants }:propstypes) => {
-        const parentData = {title, participants}
-        dataToParent({title, participants})
-    //     const id = group._id
-    //     console.log('....ogroup:', group, '\n', oldPart);
-    //     console.log('....onFinish started', '\n', title, '\n', participants, '\n', id);
-    //     const response = await fetch("http://localhost:5000/api/conversation/groups/" + id, {
-    //         method: "PUT",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "access-control-allow-origin": "*",
-    //         },
-    //         body: JSON.stringify({ title, participants})
-    //     });
-    //     console.log("Success:", group);
-    //     console.log("Success3:", title, participants, id);
-    //     const data = await response.json();
-    //     console.log('....data', data);
-    //     return data;
+    const onFinish = async ({ title, participants }: propstypes) => {
+        dataToParent({ title, participants })
+        //     const id = group._id
+        //     console.log('....ogroup:', group, '\n', oldPart);
+        //     console.log('....onFinish started', '\n', title, '\n', participants, '\n', id);
+        //     console.log("Success:", group);
+        //     await editGroup({id, title, participants})
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -57,11 +46,13 @@ const EditGroup = ({ group, dataToParent }: propstypes) => {
         alert("ERROR, please try agian...")
     };
 
-    const defValue = () => {{
-        let values = group.participants;
+    const defValue = () => {
+        {
+            let values = group.participants;
 
-        return values
-    }}
+            return values
+        }
+    }
 
     // console.log('....1111', group);
     // console.log('....1111', _group);
@@ -113,9 +104,3 @@ const EditGroup = ({ group, dataToParent }: propstypes) => {
 };
 
 export default EditGroup
-
-const getUsers = async () => {
-    const response = await fetch("http://localhost:5000/api/users/list");
-    const data = await response.json();
-    return data;
-};

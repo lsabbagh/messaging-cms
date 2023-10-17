@@ -1,12 +1,12 @@
 'use client';
 import React from "react";
-import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
+import { Table, Button, Popover, Layout } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 import getColumns from "./getColumns";
 import CreateGroup from "./CreateGroupForm"
 import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css'
-
+import { getGroups, deleteGroup } from "../service";
 
 
 const Groups: React.FC = () => {
@@ -23,12 +23,14 @@ const Groups: React.FC = () => {
 
   React.useEffect(() => {
     fetchGroups();
+    setData([])
+    setData(data)
     // console.log("...", data);
   }, []);
 
-  const onDelete = (group: Object) => {
+  const onDelete = async(group: Object) => {
     console.log('....dleteatt', group);
-    deleteGroup(group)
+    await deleteGroup(group)
     setData(data);
     console.log('....deletesucc')
   }
@@ -88,14 +90,14 @@ const Groups: React.FC = () => {
           <div className={styles.users}>
             Groups
           </div>
-          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
+          {/* <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
             <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
-          </Popover>
+          </Popover> */}
         </Header>
 
         <Content style={contentStyle}>
           <div className={styles.table}>
-            <Table columns={getColumns(onDelete, onEdit)} dataSource={data}/>
+            <Table columns={getColumns(onDelete)} dataSource={data}/>
           </div>
         </Content>
 
@@ -108,20 +110,4 @@ const Groups: React.FC = () => {
 
 export default Groups;
 
-const getGroups = async () => {
-  const response = await fetch("http://localhost:5000/api/conversation/groups/list");
-  const data = await response.json();
-  console.log('....datagrp', data);
-  return data;
-};
 
-
-const deleteGroup = async (group: any) => {
-  const id = group._id
-  console.log('....group', id);
-  const response = await fetch("http://localhost:5000/api/conversation/" + id, { method: "DELETE" });
-  console.log('....res');
-  const data = await response.json();
-  console.log('....data', data);
-  return data;
-};

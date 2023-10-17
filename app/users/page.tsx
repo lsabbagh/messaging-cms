@@ -1,13 +1,12 @@
 'use client';
 import React from "react";
-import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
+import { Table, Button, Popover, Layout } from "antd";
+const { Header, Footer, Content } = Layout;
 import getColumns from "./getColumns";
-import CreateUser from "./CreateUserForm"
-import SignInForm from "./SignInForm"
-import EditUser from "./EditUser";
+import CreateUser from "./CreateUserForm";
 import { useSearchParams } from "next/navigation";
-import styles from '@/app/styles/users.module.css'
+import styles from '@/app/styles/users.module.css';
+import { getUsers, deleteUser } from "../service";
 
 
 
@@ -98,28 +97,8 @@ const Users: React.FC = () => {
         <Footer style={footerStyle}>Admin: {_username}</Footer>
 
       </Layout>
-
-      <br />
-
-      <div className={styles.signInForm}>
-        <SignInForm />
-      </div>
-
     </div>
   );
 };
 
 export default Users;
-
-const getUsers = async () => {
-  const response = await fetch("http://localhost:5000/api/users/list/users");
-  const data = await response.json();
-  return data;
-};
-
-
-const deleteUser = async (user: any) => {
-  const response = await fetch("http://localhost:5000/api/users/" + user._id, { method: "DELETE" });
-  const data = await response.json();
-  return data;
-};

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
-import { Confirm } from "./page";
+import { createUser } from "../service";
 
 export type FieldType = {
   username?: string;
@@ -17,22 +17,13 @@ export type FieldType = {
   remember?: string;
 };
 
-const CreateAdmin = () => {
+const CreateUser = () => {
   const { Option } = Select;
 
 
   const onFinish = async (values: any) => {
-    const confirm = await Confirm();
-    if(!confirm) return;
-
-    await fetch("http://localhost:5000/api/users/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "access-control-allow-origin": "*",
-      },
-      body: JSON.stringify(values)
-    });
+    await createUser(values);
+  
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo: any) => {
@@ -124,7 +115,7 @@ const CreateAdmin = () => {
       <Form.Item<FieldType>
         label="City"
         name="city"
-        rules={[{ required: false }]}
+        rules={[{ required: false}]}
       >
         <Input />
       </Form.Item>
@@ -132,9 +123,9 @@ const CreateAdmin = () => {
       <Form.Item<FieldType>
       name="type"
       hidden
-      initialValue="admin"
+      initialValue="user"
     >
-      <Input value="admin"/>
+      <Input value="user"/>
     </Form.Item>
 
       <Form.Item<FieldType>
@@ -154,4 +145,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default CreateUser;

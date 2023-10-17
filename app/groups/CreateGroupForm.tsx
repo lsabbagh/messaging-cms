@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
+import { getAllUsers, createGroup } from "../service";
 
 export type FieldType = {
   title?: string;
@@ -15,7 +16,7 @@ const CreateGroup = ({dataToParent}:parentData) => {
   const [users, setUsers] = React.useState<[]>([]);
 
   const fetchUsers = async () => {
-    const _users = await getUsers();
+    const _users = await getAllUsers();
     setUsers(_users)
   };
 
@@ -28,23 +29,12 @@ const CreateGroup = ({dataToParent}:parentData) => {
 
   const onFinish = async ({ title, participants }: FieldType) => {
     // console.log('....parrp', participants);
-
-    const response = await fetch("http://localhost:5000/api/conversation/groups/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "access-control-allow-origin": "*",
-      },
-      body: JSON.stringify({
-        title,
-        participants,
-      })
-    });
-    const data = await response.json();
-    // console.log("....Success:", title, participants);
-    console.log("....Success22:", data);
+    if(participants!.length <= 2) {
+      alert('a group should be have at least 3 participants');
+      return;
+    }
+    const data = await createGroup({title, participants})
     dataToParent(data)
-    return data
   };
   const onFinishFailed = (errorInfo: any) => {
     // console.log("....Failed:", errorInfo);
@@ -81,7 +71,7 @@ const CreateGroup = ({dataToParent}:parentData) => {
           placeholder="Select an option" 
           mode="multiple" 
           allowClear 
-          options={users.map((user: any) => ({
+          options={users?.map((user: any) => ({
             value: user?._id,
             label: user?.username,
           }))}
@@ -98,10 +88,3 @@ const CreateGroup = ({dataToParent}:parentData) => {
 };
 
 export default CreateGroup;
-
-const getUsers = async () => {
-  const response = await fetch("http://localhost:5000/api/users/list");
-  const data = await response.json();
-  // console.log('....data', data);
-  return data;
-};

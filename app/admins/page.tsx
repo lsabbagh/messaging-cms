@@ -5,6 +5,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import getColumns from './getColumns';
 import CreateAdmin from "./CreateAdminForm";
 import styles from '@/app/styles/users.module.css'
+import { getAdmins, deleteAdmin } from "../service";
 
 
 
@@ -21,8 +22,8 @@ const Admins: React.FC = () => {
   //   // console.log("...", data);
   // }, [data]);
 
-  const onDelete = (admin: object) => {
-    deleteAdmin(admin)
+  const onDelete = async (admin: object) => {
+    await deleteAdmin(admin)
     setData(data);
     console.log('....', admin)
   }
@@ -79,7 +80,7 @@ const Admins: React.FC = () => {
             Admins
           </div>
           <div>
-            <Button type="primary" onClick={()=>fetchAdmins()}>update list</Button>
+            <Button type="primary" onClick={() => fetchAdmins()}>update list</Button>
           </div>
           <Popover content={<CreateAdmin />} title="Add New Admin" trigger='click'>
             <Button type="primary" className={styles.addNewUserBut}>Add New Admin</Button>
@@ -101,38 +102,3 @@ const Admins: React.FC = () => {
 };
 
 export default Admins;
-
-export const Confirm = async () => {
-  const password = prompt('enter the super admin password');
-  const response = await fetch("http://localhost:5000/api/users/confirm", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "access-control-allow-origin": "*",
-    }, 
-    body: JSON.stringify({password}),
-  })
-
-  const isConfirmed = await response.json();
-  return isConfirmed;
-}
-
-
-const getAdmins = async () => { 
-  const confirm = await Confirm();
-  if(!confirm) return;
-
-  const response = await fetch("http://localhost:5000/api/users/list/admins");
-  const data = await response.json();
-  console.log('....listadmin', data);
-  return data;
-};
-
-const deleteAdmin = async (admin: any) => {
-  const confirm = await Confirm();
-  if(!confirm) return;
-  
-  const response = await fetch("http://localhost:5000/api/users/" + admin._id, { method: "DELETE" });
-  const data = await response.json();
-  return data;
-};

@@ -1,32 +1,17 @@
 import React, { use } from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { FieldType } from "./CreateAdminForm";
-import { Confirm } from "./page";
+import { editAdmin } from "../service";
 
 
 const EditAdmin = ({ admin }: any) => {
 
     const onFinish = async (_admin: any) => {
-
-        const confirm = await Confirm();
-        if (!confirm) return;
-
         console.log('1111', admin);
 
         const { username, email } = _admin;
-        const updatedAdmin = { username, email }
-        const response = await fetch("http://localhost:5000/api/users/" + admin._id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "access-control-allow-origin": "*",
-            },
-            body: JSON.stringify(updatedAdmin)
-        });
-        console.log("Success:", admin);
-        console.log("Success2:", updatedAdmin);
-        const data = await response.json();
-        return data;
+        const updatedAdmin = { username, email };
+        await editAdmin({ admin, updatedAdmin });
     };
 
     const onFinishFailed = (errorInfo: any) => {
