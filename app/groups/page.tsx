@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import { Table, Button, Popover, Layout } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 import getColumns from "./getColumns";
 import CreateGroup from "./CreateGroupForm"
 import { useSearchParams } from "next/navigation";
@@ -11,7 +11,7 @@ import { getGroups, deleteGroup } from "../service";
 
 const Groups: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
-  // console.log("...1",deletedRow);
+  // console.log("....1",deletedRow);
 
   const searchParams = useSearchParams();
   const _username = searchParams.get('data')
@@ -25,7 +25,7 @@ const Groups: React.FC = () => {
     fetchGroups();
     setData([])
     setData(data)
-    // console.log("...", data);
+    // console.log("....", data);
   }, []);
 
   const onDelete = async(group: Object) => {
@@ -90,14 +90,14 @@ const Groups: React.FC = () => {
           <div className={styles.users}>
             Groups
           </div>
-          {/* <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
+          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
             <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
-          </Popover> */}
+          </Popover>
         </Header>
 
         <Content style={contentStyle}>
           <div className={styles.table}>
-            <Table columns={getColumns(onDelete)} dataSource={data}/>
+            <Table columns={getColumns(onDelete, onEdit)} dataSource={data}/>
           </div>
         </Content>
 

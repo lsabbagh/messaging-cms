@@ -1,12 +1,13 @@
 import { Button, Popconfirm, Popover } from 'antd';
-import EditGroup, {propstypes} from "./editGroup";
+import EditGroup from "./editGroup";
 
-const editedData = ({title, participants}: propstypes) => {
-  const editedData = {title, participants};
-  return editedData
-}
+// const editedData = ({title, participants}: propstypes) => {
+//   const editedData = {title, participants};
+//   return editedData
+// }
 
-const getColumns = (onDelete: Function, /*onEdit: Function*/) => [
+
+const getColumns = (onDelete: Function, onEdit: Function) => [
   {
     title: "Goup Name",
     dataIndex: "title",
@@ -17,6 +18,9 @@ const getColumns = (onDelete: Function, /*onEdit: Function*/) => [
     title: "Participants",
     dataIndex: "participants",
     key: "participants",
+    render: (participants: []) => participants.map((participant: any) => (
+      <span key={participant.id}>{participant.username}, </span>
+    )),
   },
   {
     title: 'Actions',
@@ -30,9 +34,9 @@ const getColumns = (onDelete: Function, /*onEdit: Function*/) => [
         >
           <Button type="primary">Delete</Button>
         </Popconfirm>
-        {/* <Popover content={<EditGroup group={record} dataToParent={editedData}/>} title='edit group'>
-          <Button onClick={() => { onEdit(record), console.log('....record', record) }} type="text">Edit</Button>
-        </Popover> */}
+        <Popover content={<EditGroup group={record} /*dataToParent={editedData}*//>} title='edit group'>
+          <Button onClick={() => { onEdit(record), console.log('....record', {record, _}) }} type="text">Edit</Button>
+        </Popover>
 
 
       </div>

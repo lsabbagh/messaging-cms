@@ -3,23 +3,30 @@ import { Button, Checkbox, Form, Input, Select } from "antd";
 import { FieldType } from "./CreateGroupForm";
 import { getUsers, editGroup } from "../service";
 
-// type propstypes = {
-//     title: string;
-//     participants: Array<string>;
-//     group: any;
-//     // dataToParent: (data: any) => void; 
-// }
-export interface propstypes {
-    title?: string;
-    participants?: Array<string>;
+interface Group {
+    group: any
+    created_at: any;
+    participants: [];
+    title: string;
+    type: string;
+    __v: any;
+    _id: string;
+}
+interface propstypes {
+    title: string;
+    participants: [];
     group: any;
-    dataToParent: any//(data: any) => void; 
+    id: string;
+    username: string
+    // dataToParent: any//(data: any) => void; 
 }
 
-const EditGroup = ({ group, dataToParent }: propstypes) => {
-    const oldPart = group.participants.split(',')
 
-    console.log('....1st', group, '\n', oldPart);
+const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
+    const oldParticipants = group.participants
+    const oldParticipantsId = oldParticipants?.map((participant: propstypes) => participant.id);
+    console.log('....1st', { group, oldParticipants, oldParticipantsId });
+
     const [users, setUsers] = React.useState([]);
 
     const fetchUsers = async () => {
@@ -33,16 +40,17 @@ const EditGroup = ({ group, dataToParent }: propstypes) => {
     }, []);
 
     const onFinish = async ({ title, participants }: propstypes) => {
-        dataToParent({ title, participants })
-        //     const id = group._id
-        //     console.log('....ogroup:', group, '\n', oldPart);
-        //     console.log('....onFinish started', '\n', title, '\n', participants, '\n', id);
-        //     console.log("Success:", group);
-        //     await editGroup({id, title, participants})
+        // dataToParent({ title, participants })
+        const id = group._id
+        //     console.log('....ogroup:', group, '\n', oldParticipants);
+        console.log('....onFinish started', { title, participants, id });
+
+        await editGroup({ id, title, participants })
+        console.log("....Success",);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        console.log("....Failed:", errorInfo);
         alert("ERROR, please try agian...")
     };
 
@@ -86,7 +94,7 @@ const EditGroup = ({ group, dataToParent }: propstypes) => {
                     placeholder="Select an option"
                     mode="multiple"
                     allowClear
-                    defaultValue={oldPart}
+                    defaultValue={[...oldParticipantsId]}
                     options={users.map((group: any) => ({
                         value: group?._id,
                         label: group?.username,
