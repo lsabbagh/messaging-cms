@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Logout } from "./service";
 import { Popover, Button, Form, Input } from "antd";
 import Login from "./login";
+import styles from "@/app/styles/app.module.css"
 // import 'antd/dist/antd';
 
 
@@ -40,16 +41,19 @@ export default function Home() {
 
   return (
     <main>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div className={styles.container}>
         {isSignedIn && <>
 
-          <button onClick={() => router.push('/users')}>Users</button>
-          <button onClick={() => router.push('/groups')}>Groups</button>
-          <button onClick={() => router.push('/admins')}>Admins</button>
+          <div className={styles.background}> </div>
+          <div className={styles.buttons}>
+          <Button onClick={() => router.push('/users')} type="primary" className={styles.button}>Users</Button>
+          <Button onClick={() => router.push('/groups')} type="primary" className={styles.button}>Groups</Button>
+          <Button onClick={() => router.push('/admins')} type="primary" className={styles.button}>Admins</Button>
 
           <br />
           <br />
-          <button onClick={logOut}>Log Out</button>
+          <Button onClick={logOut} className={styles.logout} ghost danger>Log Out</Button>
+          </div>
         </>}
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { FieldType } from "./CreateGroupForm";
-import { getUsers, editGroup } from "../service";
+import { getAllUsers, editGroup } from "../service";
 
 interface Group {
     group: any
@@ -15,14 +15,14 @@ interface Group {
 interface propstypes {
     title: string;
     participants: [];
+    profile: string;
     group: any;
     id: string;
     username: string
-    // dataToParent: any//(data: any) => void; 
 }
 
 
-const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
+const EditGroup = ({group}: any) => {
     const oldParticipants = group.participants
     const oldParticipantsId = oldParticipants?.map((participant: propstypes) => participant.id);
     console.log('....1st', { group, oldParticipants, oldParticipantsId });
@@ -30,7 +30,7 @@ const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
     const [users, setUsers] = React.useState([]);
 
     const fetchUsers = async () => {
-        const _users = await getUsers();
+        const _users = await getAllUsers();
         setUsers(_users)
     };
 
@@ -39,13 +39,12 @@ const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
         console.log('....grp', users);
     }, []);
 
-    const onFinish = async ({ title, participants }: propstypes) => {
-        // dataToParent({ title, participants })
+    const onFinish = async ({ title, participants, profile }: propstypes) => {
         const id = group._id
         //     console.log('....ogroup:', group, '\n', oldParticipants);
-        console.log('....onFinish started', { title, participants, id });
+        console.log('....onFinish started', { title, participants, id, profile });
 
-        await editGroup({ id, title, participants })
+        await editGroup({ id, title, participants, profile })
         console.log("....Success",);
     };
 
@@ -53,17 +52,6 @@ const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
         console.log("....Failed:", errorInfo);
         alert("ERROR, please try agian...")
     };
-
-    const defValue = () => {
-        {
-            let values = group.participants;
-
-            return values
-        }
-    }
-
-    // console.log('....1111', group);
-    // console.log('....1111', _group);
 
     return (
         <Form
@@ -100,6 +88,14 @@ const EditGroup = ({ group/*, dataToParent*/ }: Group) => {
                         label: group?.username,
                     }))}
                 />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+                label="Group Profile"
+                name="profile"
+                initialValue={group.profile}
+            >
+                <Input />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

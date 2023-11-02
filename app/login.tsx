@@ -1,6 +1,6 @@
 'use client';
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Image } from "antd";
 import { useRouter } from "next/navigation";
 import { propsTypes, signIn } from "./service";
 import styles from "@/app/styles/login.module.css"
@@ -29,12 +29,12 @@ const Login: React.FC<AppProps> = ({ onSignIn }) => {
     // if failed
 
 
-    // router.push(`/adminssS5t78f?data=${username}`);
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
+        {/* <div className={styles.welcome}>Welcome back!</div> */}
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -49,6 +49,7 @@ const Login: React.FC<AppProps> = ({ onSignIn }) => {
             label="Username"
             name="username"
             rules={[{ required: false, message: "Please input your username!" }]}
+            className={styles.formItem}
           >
             <Input />
           </Form.Item>
@@ -56,6 +57,7 @@ const Login: React.FC<AppProps> = ({ onSignIn }) => {
             label="Password"
             name="password"
             rules={[{ required: false, message: "Please input your password!" }]}
+            className={styles.formItem}
           >
             <Input.Password />
           </Form.Item>

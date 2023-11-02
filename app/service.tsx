@@ -1,8 +1,10 @@
 import { getServers } from "dns";
 import { getserviceSate } from "./state";
 
-const storageData: Object | any = JSON.parse(localStorage.getItem('token') || '{}');
-const token = storageData?.token;
+export const getTokenData = () => {
+    const storageData: Object | any = JSON.parse(localStorage.getItem('token') || '{}');
+    return storageData
+}
 
 
 export type propsTypes = {
@@ -10,9 +12,11 @@ export type propsTypes = {
     password: string,
     title: string,
     participants: [],
+    profile: string,
     id: string,
     user: any, //object
     updatedUser: any //Object,
+    isDeleted: boolean,
 };
 
 
@@ -63,6 +67,8 @@ export const Logout = async (state: any) => {
 
 
 export const getAllUsers = async () => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users/list", {
         headers: {
             "Content-Type": "application/json",
@@ -83,14 +89,17 @@ export const getAllUsers = async () => {
     return data;
 };
 
-export const getUsers = async () => {
+export const getUsers = async (isDeleted: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users/list/users", {
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
             "authType": "cms",
-            "token": token
-        }
+            "token": token,
+            "isDeleted": isDeleted
+        },
     });
 
     if (response.status === 401) {
@@ -105,6 +114,8 @@ export const getUsers = async () => {
 };
 
 export const createUser = async (data: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users", {
         method: "POST",
         headers: {
@@ -125,6 +136,8 @@ export const createUser = async (data: any) => {
 };
 
 export const editUser = async ({ user, updatedUser }: propsTypes) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users/" + user._id, {
         method: "PUT",
         headers: {
@@ -149,14 +162,17 @@ export const editUser = async ({ user, updatedUser }: propsTypes) => {
 };
 
 export const deleteUser = async (user: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users/" + user._id, {
-        method: "DELETE",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
             "authType": "cms",
             "token": token
-        }
+        },
+        body: JSON.stringify({username: user.username, email: user.email, isDeleted: !user.isDeleted})
     });
 
     if (response.status === 401) {
@@ -173,6 +189,8 @@ export const deleteUser = async (user: any) => {
 
 
 export const getGroups = async () => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/conversation/groups/list", {
         headers: {
             "Content-Type": "application/json",
@@ -195,6 +213,8 @@ export const getGroups = async () => {
 };
 
 export const createGroup = async ({ title, participants }: propsTypes) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/conversation/groups/", {
         method: "POST",
         headers: {
@@ -224,7 +244,9 @@ export const createGroup = async ({ title, participants }: propsTypes) => {
     return data
 };
 
-export const editGroup = async ({ id, title, participants }: propsTypes) => {
+export const editGroup = async ({ id, title, participants, profile }: propsTypes) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/conversation/groups/" + id, {
         method: "PUT",
         headers: {
@@ -233,7 +255,7 @@ export const editGroup = async ({ id, title, participants }: propsTypes) => {
             "authType": "cms",
             "token": token,
         },
-        body: JSON.stringify({ title, participants })
+        body: JSON.stringify({ title, participants, profile })
     });
 
     if (response.status === 401) {
@@ -250,6 +272,8 @@ export const editGroup = async ({ id, title, participants }: propsTypes) => {
 };
 
 export const deleteGroup = async (group: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const id = group._id
     console.log('....group', id);
     const response = await fetch("http://localhost:5000/api/conversation/" + id, {
@@ -279,6 +303,8 @@ export const deleteGroup = async (group: any) => {
 
 
 export const Confirm = async () => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const password = prompt('enter the super admin password');
     const response = await fetch("http://localhost:5000/api/users/confirm", {
         method: "POST",
@@ -292,7 +318,7 @@ export const Confirm = async () => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout Confirm', {response, storageData});
+        console.log('....401 logout Confirm', { response, storageData });
         await Logout(storageData);
         localStorage.removeItem('token');
         console.log('....', "logout complete Confirm");
@@ -303,7 +329,9 @@ export const Confirm = async () => {
     return isConfirmed;
 };
 
-export const getAdmins = async () => {
+export const getAdmins = async (isDeleted: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const confirm = await Confirm();
     if (!confirm) return;
 
@@ -312,7 +340,8 @@ export const getAdmins = async () => {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
             "authType": "cms",
-            "token": token
+            "token": token,
+            "isDeleted": isDeleted
         },
     });
 
@@ -329,6 +358,8 @@ export const getAdmins = async () => {
 };
 
 export const createAdmin = async (values: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const confirm = await Confirm();
     if (!confirm) return;
 
@@ -343,15 +374,17 @@ export const createAdmin = async (values: any) => {
         body: JSON.stringify(values)
     });
 
-        if (response.status === 401) {
-            console.log('....401 logout createAdmin', response);
-            await Logout(storageData);
-            localStorage.removeItem('token');
-            throw new Error('Unauthorized: Logging out user');
-        };
+    if (response.status === 401) {
+        console.log('....401 logout createAdmin', response);
+        await Logout(storageData);
+        localStorage.removeItem('token');
+        throw new Error('Unauthorized: Logging out user');
+    };
 };
 
 export const editAdmin = async ({ admin, updatedAdmin }: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const confirm = await Confirm();
     if (!confirm) return;
 
@@ -380,17 +413,21 @@ export const editAdmin = async ({ admin, updatedAdmin }: any) => {
 };
 
 export const deleteAdmin = async (admin: any) => {
+    const storageData = getTokenData();
+    const token = storageData?.token;
     const confirm = await Confirm();
     if (!confirm) return;
 
     const response = await fetch("http://localhost:5000/api/users/" + admin._id, {
-        method: "DELETE",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
             "authType": "cms",
             "token": token
         },
+        body: JSON.stringify({username: admin.username, email: admin.email, isDeleted: !admin.isDeleted})
+
     });
 
     if (response.status === 401) {

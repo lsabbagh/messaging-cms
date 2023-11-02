@@ -1,38 +1,47 @@
 'use client';
 import React from "react";
-import { Table, Button, Popover, Layout } from "antd";
+import { Table, Button, Popover, Layout, Switch } from "antd";
 const { Header, Footer, Content } = Layout;
 import getColumns from "./getColumns";
 import CreateUser from "./CreateUserForm";
 import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css';
-import { getUsers, deleteUser } from "../service";
+import { getUsers, deleteUser, getTokenData } from "../service";
 
 
 
 const Users: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
+  const [isDeleted, setIsDeleteed] = React.useState<boolean>(false)
   // console.log("...1",deletedRow);
 
-  const searchParams = useSearchParams();
-  const _username = searchParams.get('data')
+  const storageData: Object | any = getTokenData()
+  const _username = storageData.admin.username
 
   const fetchUsers = async () => {
-    const users = await getUsers();
-
+    const users = await getUsers(isDeleted);
+    console.log('....user..fetchUsers', users);
     setData(users);
   };
+
   React.useEffect(() => {
     fetchUsers();
     // console.log("...", data);
-  }, [data]);
+  }, [isDeleted]);
+
   const onDelete = (user: Object) => {
     deleteUser(user)
     setData(data);
     console.log('....', user)
-  }
+  };
+
   const onEdit = (user: Object) => {
     console.log('....', user)
+  };
+
+  const onSwitchChange = () => {
+    setIsDeleteed(!isDeleted);
+    fetchUsers();
   }
 
   const headerStyle: React.CSSProperties = {
@@ -45,7 +54,8 @@ const Users: React.FC = () => {
     height: 64,
     paddingInline: 50,
     lineHeight: '64px',
-    backgroundColor: '#bbb',
+    // backgroundColor: '#A7D5D8',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
     // backgroundColor: '#96B6C5',
     fontWeight: 'bolder',
     fontSize: '25px',
@@ -65,7 +75,8 @@ const Users: React.FC = () => {
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#bbb',
+    // backgroundColor: '#A7D5D8',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
     lineHeight: '64px',
     height: 64,
     fontSize: '16px',
@@ -83,6 +94,7 @@ const Users: React.FC = () => {
           <div className={styles.users}>
             Users
           </div>
+          <Switch checkedChildren="active" unCheckedChildren="deleted" defaultChecked onChange={onSwitchChange} className={styles.switch} />
           <Popover content={<CreateUser />} title="Add New User">
             <Button type="primary" className={styles.addNewUserBut}>Add New User</Button>
           </Popover>

@@ -9,9 +9,9 @@ const EditUser = ({user}: any) => {
     // console.log('....1st', user);
     const onFinish = async (_user: any) => {
         console.log('1111',user);
-        
+        const isDeleted = false;
         const {username,  email} = _user; 
-        const updatedUser = {username, email}
+        const updatedUser = {username, email, isDeleted}
         
         await editUser({user,updatedUser});
     };

@@ -15,6 +15,7 @@ export type FieldType = {
   country?: string;
   city?: string;
   remember?: string;
+  isDeleted: boolean;
 };
 
 const CreateUser = () => {

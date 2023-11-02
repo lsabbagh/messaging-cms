@@ -10,7 +10,8 @@ const EditAdmin = ({ admin }: any) => {
         console.log('1111', admin);
 
         const { username, email } = _admin;
-        const updatedAdmin = { username, email };
+        const isDeleted = false;
+        const updatedAdmin = { username, email, isDeleted };
         await editAdmin({ admin, updatedAdmin });
     };
 

@@ -1,6 +1,6 @@
 'use client';
 import React from "react";
-import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Select } from "antd";
+import { Space, Table, Tag, Button, Checkbox, Form, Input, Popover, Layout, Switch, Select } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
 import getColumns from './getColumns';
 import CreateAdmin from "./CreateAdminForm";
@@ -11,9 +11,10 @@ import { getAdmins, deleteAdmin } from "../service";
 
 const Admins: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
+  const [isDeleted, setIsDeleteed] = React.useState<boolean>(false)
 
   const fetchAdmins = async () => {
-    const admins = await getAdmins();
+    const admins = await getAdmins(isDeleted);
     setData(admins);
   };
 
@@ -41,7 +42,8 @@ const Admins: React.FC = () => {
     height: 64,
     paddingInline: 50,
     lineHeight: '64px',
-    backgroundColor: '#526D82',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
+    // backgroundColor: '#526D82',
     // backgroundColor: '#96B6C5',
     fontWeight: 'bolder',
     fontSize: '25px',
@@ -61,7 +63,8 @@ const Admins: React.FC = () => {
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#526D82',
+    // backgroundColor: '#526D82',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
     lineHeight: '64px',
     height: 64,
     fontSize: '16px',
@@ -80,6 +83,9 @@ const Admins: React.FC = () => {
             Admins
           </div>
           <div>
+            <Switch checkedChildren="active" unCheckedChildren="deleted" 
+              defaultChecked onChange={() => setIsDeleteed(!isDeleted)} style={{marginRight: 5}}
+            />
             <Button type="primary" onClick={() => fetchAdmins()}>update list</Button>
           </div>
           <Popover content={<CreateAdmin />} title="Add New Admin" trigger='click'>

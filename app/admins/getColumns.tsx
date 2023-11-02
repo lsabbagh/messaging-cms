@@ -10,6 +10,17 @@ interface DataType {
   active: boolean;
 }
 
+const deleteWord = (record: any) => {
+  const isdeleted = record.isDeleted;
+  const deleteName = 'DELETE'
+  const undoName = 'UNDO'
+  if (isdeleted==false){
+    return deleteName
+  } else if (isdeleted==true){
+    return undoName
+  }
+}
+
 const getColumns = (onDelete: Function, onEdit: Function) => [
   {
     title: "Name",
@@ -72,7 +83,7 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
           title="Are you sure you want to delete this record?"
           onConfirm={() => onDelete(record)}
         >
-          <Button type="primary">Delete</Button>
+          <Button type="primary">{deleteWord(record)}</Button>
         </Popconfirm>
         <Popover content={<EditAdmin admin={record}/>} title='edit admin'>
           <Button onClick={() => { onEdit(record), console.log('....', 'record', record._id) }} type="text">Edit</Button>

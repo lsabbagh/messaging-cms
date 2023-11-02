@@ -13,8 +13,8 @@ const Groups: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
   // console.log("....1",deletedRow);
 
-  const searchParams = useSearchParams();
-  const _username = searchParams.get('data')
+  const storageData: Object | any = JSON.parse(localStorage.getItem('token') || '{}');
+  const _username = storageData.admin.username
 
   const fetchGroups = async () => {
     const groups = await getGroups();
@@ -52,7 +52,8 @@ const Groups: React.FC = () => {
     height: 64,
     paddingInline: 50,
     lineHeight: '64px',
-    backgroundColor: '#bbb',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
+    // backgroundColor: '#bbb',
     // backgroundColor: '#96B6C5',
     fontWeight: 'bolder',
     fontSize: '25px',
@@ -72,7 +73,8 @@ const Groups: React.FC = () => {
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#bbb',
+    // backgroundColor: '#bbb',
+    background: 'linear-gradient(to right, #BEF1FF, #ccc)',
     lineHeight: '64px',
     height: 64,
     fontSize: '16px',
