@@ -26,10 +26,10 @@ const Admins: React.FC = () => {
   const onDelete = async (admin: object) => {
     await deleteAdmin(admin)
     setData(data);
-    console.log('....', admin)
+    // console.log('....', admin)
   }
   const onEdit = (admin: object) => {
-    console.log('....', admin)
+    // console.log('....', admin)
   }
 
   const headerStyle: React.CSSProperties = {

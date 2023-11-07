@@ -41,7 +41,7 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
           <Button type="primary">Delete</Button>
         </Popconfirm>
         <Popover content={<EditGroup group={record} />} title='edit group'>
-          <Button onClick={() => { onEdit(record), console.log('....record', { record, _ }) }} type="text">Edit</Button>
+          <Button onClick={() => { onEdit(record)/*, console.log('....record', { record, _ })*/ }} type="text">Edit</Button>
         </Popover>
 
 

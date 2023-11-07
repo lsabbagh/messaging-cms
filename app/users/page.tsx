@@ -16,11 +16,11 @@ const Users: React.FC = () => {
   // console.log("...1",deletedRow);
 
   const storageData: Object | any = getTokenData()
-  const _username = storageData.admin.username
+  const _username = storageData?.admin?.username
 
   const fetchUsers = async () => {
     const users = await getUsers(isDeleted);
-    console.log('....user..fetchUsers', users);
+    // console.log('....user..fetchUsers', users);
     setData(users);
   };
 
@@ -32,11 +32,11 @@ const Users: React.FC = () => {
   const onDelete = (user: Object) => {
     deleteUser(user)
     setData(data);
-    console.log('....', user)
+    // console.log('....', user)
   };
 
   const onEdit = (user: Object) => {
-    console.log('....', user)
+    // console.log('....', user)
   };
 
   const onSwitchChange = () => {

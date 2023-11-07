@@ -25,7 +25,7 @@ interface propstypes {
 const EditGroup = ({group}: any) => {
     const oldParticipants = group.participants
     const oldParticipantsId = oldParticipants?.map((participant: propstypes) => participant.id);
-    console.log('....1st', { group, oldParticipants, oldParticipantsId });
+    // console.log('....1st', { group, oldParticipants, oldParticipantsId });
 
     const [users, setUsers] = React.useState([]);
 
@@ -36,20 +36,20 @@ const EditGroup = ({group}: any) => {
 
     React.useEffect(() => {
         fetchUsers();
-        console.log('....grp', users);
+        // console.log('....grp', users);
     }, []);
 
     const onFinish = async ({ title, participants, profile }: propstypes) => {
         const id = group._id
         //     console.log('....ogroup:', group, '\n', oldParticipants);
-        console.log('....onFinish started', { title, participants, id, profile });
+        // console.log('....onFinish started', { title, participants, id, profile });
 
         await editGroup({ id, title, participants, profile })
-        console.log("....Success",);
+        // console.log("....Success",);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("....Failed:", errorInfo);
+        // console.log("....Failed:", errorInfo);
         alert("ERROR, please try agian...")
     };
 

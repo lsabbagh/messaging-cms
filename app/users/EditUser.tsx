@@ -8,7 +8,7 @@ const EditUser = ({user}: any) => {
 
     // console.log('....1st', user);
     const onFinish = async (_user: any) => {
-        console.log('1111',user);
+        // console.log('1111',user);
         const isDeleted = false;
         const {username,  email} = _user; 
         const updatedUser = {username, email, isDeleted}
@@ -17,7 +17,7 @@ const EditUser = ({user}: any) => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        // console.log("Failed:", errorInfo);
         alert("ERROR, please try agian...")
     };
 

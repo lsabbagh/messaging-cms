@@ -1,26 +1,25 @@
 import { getServers } from "dns";
-import { getserviceSate } from "./state";
 
 export const getTokenData = () => {
-    const storageData: Object | any = JSON.parse(localStorage.getItem('token') || '{}');
+    const storageData: Object | any = typeof window !== "undefined" ? JSON.parse(localStorage.getItem('token') || '{}') : null;
     return storageData
 }
 
 
 export type propsTypes = {
-    username: string,
-    password: string,
-    title: string,
-    participants: [],
-    profile: string,
-    id: string,
+    username: any,//string,
+    password: any,//string,
+    title: any,//string,
+    participants: any,//[],
+    profile: any,//string,
+    id: any,//string,
     user: any, //object
     updatedUser: any //Object,
-    isDeleted: boolean,
+    isDeleted: any,//boolean,
 };
 
 
-export const signIn = async ({ username, password }: propsTypes) => {
+export const signIn = async ({ username, password }: any) => {
     const authType = 'cms';
     const response = await fetch("http://localhost:5000/api/admin/login", {
         method: "POST",
@@ -31,7 +30,7 @@ export const signIn = async ({ username, password }: propsTypes) => {
         body: JSON.stringify({ username, password, authType })
     })
     const data = await response.json();
-    console.log('....serice login', data);
+    // console.log('....serice login', data);
     localStorage.setItem('token', JSON.stringify(data));
     return data;
 };
@@ -41,7 +40,7 @@ export const Logout = async (state: any) => {
     const userId = admin?._id;
     const token = state?.token;
     const authType = 'cms';
-    console.log('....logout began', { userId, token, authType });
+    // console.log('....logout began', { userId, token, authType });
     const response = await fetch("http://localhost:5000/api/logout/" + userId, {
         method: "DELETE",
         headers: {
@@ -50,14 +49,14 @@ export const Logout = async (state: any) => {
         },
         body: JSON.stringify({ authType })
     });
-    console.log('....logout res', response);
+    // console.log('....logout res', response);
     if (!response.ok) {
-        console.log('....error logging out',);
+        // console.log('....error logging out',);
         throw new Error('Network response was not ok');
     };
 
     const data = response.json();
-    console.log('....logout', data);
+    // console.log('....logout', data);
 
     localStorage.removeItem('token');
 
@@ -79,7 +78,7 @@ export const getAllUsers = async () => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout getAllUsers', response);
+        // console.log('....401 logout getAllUsers', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
@@ -103,7 +102,7 @@ export const getUsers = async (isDeleted: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout getUsers', response);
+        // console.log('....401 logout getUsers', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
@@ -128,14 +127,14 @@ export const createUser = async (data: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout createUser', response);
+        // console.log('....401 logout createUser', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
 };
 
-export const editUser = async ({ user, updatedUser }: propsTypes) => {
+export const editUser = async ({ user, updatedUser }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/users/" + user._id, {
@@ -150,12 +149,12 @@ export const editUser = async ({ user, updatedUser }: propsTypes) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout editUser', response);
+        // console.log('....401 logout editUser', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
-    console.log("Success:", updatedUser);
+    // console.log("Success:", updatedUser);
 
     const data = await response.json();
     return data;
@@ -176,7 +175,7 @@ export const deleteUser = async (user: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout deleteUser', response);
+        // console.log('....401 logout deleteUser', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
@@ -201,18 +200,18 @@ export const getGroups = async () => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout getGroups', response);
+        // console.log('....401 logout getGroups', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
 
     const data = await response.json();
-    console.log('....datagrp', data);
+    // console.log('....datagrp', data);
     return data;
 };
 
-export const createGroup = async ({ title, participants }: propsTypes) => {
+export const createGroup = async ({ title, participants }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/conversation/groups/", {
@@ -230,7 +229,7 @@ export const createGroup = async ({ title, participants }: propsTypes) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout createGroup', response);
+        // console.log('....401 logout createGroup', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
@@ -239,12 +238,12 @@ export const createGroup = async ({ title, participants }: propsTypes) => {
     const data = await response.json();
 
     // console.log("....Success:", title, participants);
-    console.log("....Success22:", data);
+    // console.log("....Success22:", data);
 
     return data
 };
 
-export const editGroup = async ({ id, title, participants, profile }: propsTypes) => {
+export const editGroup = async ({ id, title, participants, profile }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
     const response = await fetch("http://localhost:5000/api/conversation/groups/" + id, {
@@ -259,15 +258,15 @@ export const editGroup = async ({ id, title, participants, profile }: propsTypes
     });
 
     if (response.status === 401) {
-        console.log('....401 logout editGroup', response);
+        // console.log('....401 logout editGroup', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
-    console.log("Success3:", title, participants, id);
+    // console.log("Success3:", title, participants, id);
 
     const data = await response.json();
-    console.log('....data', data);
+    // console.log('....data', data);
     return data;
 };
 
@@ -275,7 +274,7 @@ export const deleteGroup = async (group: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
     const id = group._id
-    console.log('....group', id);
+    // console.log('....group', id);
     const response = await fetch("http://localhost:5000/api/conversation/" + id, {
         method: "DELETE",
         headers: {
@@ -288,15 +287,15 @@ export const deleteGroup = async (group: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout deleteGroup', response);
+        // console.log('....401 logout deleteGroup', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
 
-    console.log('....res');
+    // console.log('....res');
     const data = await response.json();
-    console.log('....data', data);
+    // console.log('....data', data);
     return data;
 };
 
@@ -318,10 +317,10 @@ export const Confirm = async () => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout Confirm', { response, storageData });
+        // console.log('....401 logout Confirm', { response, storageData });
         await Logout(storageData);
         localStorage.removeItem('token');
-        console.log('....', "logout complete Confirm");
+        // console.log('....', "logout complete Confirm");
         throw new Error('Unauthorized: Logging out user');
     };
 
@@ -346,14 +345,14 @@ export const getAdmins = async (isDeleted: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout getAdmins', response);
+        // console.log('....401 logout getAdmins', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
 
     const data = await response.json();
-    console.log('....listadmin', data);
+    // console.log('....listadmin', data);
     return data;
 };
 
@@ -375,7 +374,7 @@ export const createAdmin = async (values: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout createAdmin', response);
+        // console.log('....401 logout createAdmin', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
@@ -400,14 +399,14 @@ export const editAdmin = async ({ admin, updatedAdmin }: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout editAdmin', response);
+        // console.log('....401 logout editAdmin', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');
     };
 
-    console.log("Success:", admin);
-    console.log("Success2:", updatedAdmin);
+    // console.log("Success:", admin);
+    // console.log("Success2:", updatedAdmin);
     const data = await response.json();
     return data;
 };
@@ -431,7 +430,7 @@ export const deleteAdmin = async (admin: any) => {
     });
 
     if (response.status === 401) {
-        console.log('....401 logout deleteAdmin', response);
+        // console.log('....401 logout deleteAdmin', response);
         await Logout(storageData);
         localStorage.removeItem('token');
         throw new Error('Unauthorized: Logging out user');

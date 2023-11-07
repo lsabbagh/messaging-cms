@@ -20,7 +20,7 @@ const CreateUser = () => {
   const [user, setUser] = React.useState({})
   const onLogin = async ({username, password}) => {
     const response = await signIn(username, password)
-    console.log('....', {response})
+    // console.log('....', {response})
     // @TODO: only if success
     setUser(response.user)
   }

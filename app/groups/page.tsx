@@ -29,17 +29,17 @@ const Groups: React.FC = () => {
   }, []);
 
   const onDelete = async(group: Object) => {
-    console.log('....dleteatt', group);
+    // console.log('....dleteatt', group);
     await deleteGroup(group)
     setData(data);
-    console.log('....deletesucc')
+    // console.log('....deletesucc')
   }
   const onEdit = (group: Object) => {
-    console.log('....edit', group)
+    // console.log('....edit', group)
   }
 
   const getDatafromCreateGroup = (newData: Object) => {
-    console.log('....ddatta', newData);
+    // console.log('....ddatta', newData);
     setData(data);
   }
   const headerStyle: React.CSSProperties = {

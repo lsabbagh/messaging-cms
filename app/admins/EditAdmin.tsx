@@ -7,7 +7,7 @@ import { editAdmin } from "../service";
 const EditAdmin = ({ admin }: any) => {
 
     const onFinish = async (_admin: any) => {
-        console.log('1111', admin);
+        // console.log('1111', admin);
 
         const { username, email } = _admin;
         const isDeleted = false;
@@ -16,7 +16,7 @@ const EditAdmin = ({ admin }: any) => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log("Failed:", errorInfo);
+        // console.log("Failed:", errorInfo);
         alert("ERROR, please try agian...")
     };
 

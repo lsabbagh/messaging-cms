@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   const isSignedIn = !!token;
-  console.log('....state', state);
+  // console.log('....state', state);
 
   return (
     <main>

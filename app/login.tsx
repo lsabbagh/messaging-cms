@@ -20,7 +20,7 @@ const Login: React.FC<AppProps> = ({ onSignIn }) => {
     }
 
     const response = await signIn({ username, password });
-    console.log('....response:', response);
+    // console.log('....response:', response);
 
     // if valid
     setAdmin(response)

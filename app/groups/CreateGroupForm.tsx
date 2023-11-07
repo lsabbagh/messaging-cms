@@ -6,6 +6,7 @@ export type FieldType = {
   title?: string;
   participants?: [];
   type?: "group";
+  profile: string;
 };
 
 interface parentData {
