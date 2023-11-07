@@ -24,7 +24,7 @@ const CreateUser = () => {
 
   const onFinish = async (values: any) => {
     await createUser(values);
-  
+
     // console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo: any) => {
@@ -67,7 +67,7 @@ const CreateUser = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item<FieldType>
+      {/* <Form.Item<FieldType>
         label="First Name"
         name="firstName"
         rules={[{ required: false }]}
@@ -118,16 +118,16 @@ const CreateUser = () => {
         name="city"
         rules={[{ required: false}]}
       >
-        <Input />
-      </Form.Item>
+        <Input /> */}
+      {/* </Form.Item> */}
 
       <Form.Item<FieldType>
-      name="type"
-      hidden
-      initialValue="user"
-    >
-      <Input value="user"/>
-    </Form.Item>
+        name="type"
+        hidden
+        initialValue="user"
+      >
+        <Input value="user" />
+      </Form.Item>
 
       <Form.Item<FieldType>
         name="remember"

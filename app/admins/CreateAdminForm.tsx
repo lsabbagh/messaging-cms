@@ -66,7 +66,7 @@ const CreateAdmin = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item<FieldType>
+      {/* <Form.Item<FieldType>
         label="First Name"
         name="firstName"
         rules={[{ required: false }]}
@@ -118,7 +118,7 @@ const CreateAdmin = () => {
         rules={[{ required: false }]}
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item<FieldType>
         name="type"
