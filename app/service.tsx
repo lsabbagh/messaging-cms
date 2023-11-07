@@ -1,5 +1,8 @@
 import { getServers } from "dns";
 
+// const URL = 'http://localhost:5000';
+const URL = 'https://chatoo-api.onrender.com'
+
 export const getTokenData = () => {
     const storageData: Object | any = typeof window !== "undefined" ? JSON.parse(localStorage.getItem('token') || '{}') : null;
     return storageData
@@ -21,7 +24,7 @@ export type propsTypes = {
 
 export const signIn = async ({ username, password }: any) => {
     const authType = 'cms';
-    const response = await fetch("http://localhost:5000/api/admin/login", {
+    const response = await fetch(URL + "/api/admin/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -41,7 +44,7 @@ export const Logout = async (state: any) => {
     const token = state?.token;
     const authType = 'cms';
     // console.log('....logout began', { userId, token, authType });
-    const response = await fetch("http://localhost:5000/api/logout/" + userId, {
+    const response = await fetch(URL + "/api/logout/" + userId, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -68,7 +71,7 @@ export const Logout = async (state: any) => {
 export const getAllUsers = async () => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/users/list", {
+    const response = await fetch(URL + "/api/users/list", {
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
@@ -91,7 +94,7 @@ export const getAllUsers = async () => {
 export const getUsers = async (isDeleted: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/users/list/users", {
+    const response = await fetch(URL + "/api/users/list/users", {
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
@@ -115,7 +118,7 @@ export const getUsers = async (isDeleted: any) => {
 export const createUser = async (data: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/users", {
+    const response = await fetch(URL + "/api/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -137,7 +140,7 @@ export const createUser = async (data: any) => {
 export const editUser = async ({ user, updatedUser }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/users/" + user._id, {
+    const response = await fetch(URL + "/api/users/" + user._id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -163,7 +166,7 @@ export const editUser = async ({ user, updatedUser }: any) => {
 export const deleteUser = async (user: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/users/" + user._id, {
+    const response = await fetch(URL + "/api/users/" + user._id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -171,7 +174,7 @@ export const deleteUser = async (user: any) => {
             "authType": "cms",
             "token": token
         },
-        body: JSON.stringify({username: user.username, email: user.email, isDeleted: !user.isDeleted})
+        body: JSON.stringify({ username: user.username, email: user.email, isDeleted: !user.isDeleted })
     });
 
     if (response.status === 401) {
@@ -190,7 +193,7 @@ export const deleteUser = async (user: any) => {
 export const getGroups = async () => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/conversation/groups/list", {
+    const response = await fetch(URL + "/api/conversation/groups/list", {
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
@@ -214,7 +217,7 @@ export const getGroups = async () => {
 export const createGroup = async ({ title, participants }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/conversation/groups/", {
+    const response = await fetch(URL + "/api/conversation/groups/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -246,7 +249,7 @@ export const createGroup = async ({ title, participants }: any) => {
 export const editGroup = async ({ id, title, participants, profile }: any) => {
     const storageData = getTokenData();
     const token = storageData?.token;
-    const response = await fetch("http://localhost:5000/api/conversation/groups/" + id, {
+    const response = await fetch(URL + "/api/conversation/groups/" + id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -275,7 +278,7 @@ export const deleteGroup = async (group: any) => {
     const token = storageData?.token;
     const id = group._id
     // console.log('....group', id);
-    const response = await fetch("http://localhost:5000/api/conversation/" + id, {
+    const response = await fetch(URL + "/api/conversation/" + id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -305,7 +308,7 @@ export const Confirm = async () => {
     const storageData = getTokenData();
     const token = storageData?.token;
     const password = prompt('enter the super admin password');
-    const response = await fetch("http://localhost:5000/api/users/confirm", {
+    const response = await fetch(URL + "/api/users/confirm", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -334,7 +337,7 @@ export const getAdmins = async (isDeleted: any) => {
     const confirm = await Confirm();
     if (!confirm) return;
 
-    const response = await fetch("http://localhost:5000/api/users/list/admins", {
+    const response = await fetch(URL + "/api/users/list/admins", {
         headers: {
             "Content-Type": "application/json",
             "access-control-allow-origin": "*",
@@ -362,7 +365,7 @@ export const createAdmin = async (values: any) => {
     const confirm = await Confirm();
     if (!confirm) return;
 
-    const response = await fetch("http://localhost:5000/api/users/", {
+    const response = await fetch(URL + "/api/users/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -387,7 +390,7 @@ export const editAdmin = async ({ admin, updatedAdmin }: any) => {
     const confirm = await Confirm();
     if (!confirm) return;
 
-    const response = await fetch("http://localhost:5000/api/users/" + admin._id, {
+    const response = await fetch(URL + "/api/users/" + admin._id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -417,7 +420,7 @@ export const deleteAdmin = async (admin: any) => {
     const confirm = await Confirm();
     if (!confirm) return;
 
-    const response = await fetch("http://localhost:5000/api/users/" + admin._id, {
+    const response = await fetch(URL + "/api/users/" + admin._id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -425,7 +428,7 @@ export const deleteAdmin = async (admin: any) => {
             "authType": "cms",
             "token": token
         },
-        body: JSON.stringify({username: admin.username, email: admin.email, isDeleted: !admin.isDeleted})
+        body: JSON.stringify({ username: admin.username, email: admin.email, isDeleted: !admin.isDeleted })
 
     });
 
