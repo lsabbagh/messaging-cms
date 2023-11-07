@@ -6,8 +6,10 @@ import { Logout } from "./service";
 import { Popover, Button, Form, Input } from "antd";
 import Login from "./login";
 import styles from "@/app/styles/app.module.css"
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 // import 'antd/dist/antd';
 
+if(process.env.NODE_ENV === 'production') disableReactDevTools();
 
 export default function Home() {
   const [state, setState] = React.useState<any>({})

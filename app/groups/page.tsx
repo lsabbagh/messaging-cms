@@ -13,8 +13,11 @@ const Groups: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
   // console.log("....1",deletedRow);
 
-  const storageData: Object | any = JSON.parse(localStorage.getItem('token') || '{}');
-  const _username = storageData.admin.username
+  let storageData: Object | any = {}
+  if (typeof window !== 'undefined') {
+    storageData = JSON.parse(localStorage.getItem('token') || '{}');
+  }
+  const _username = storageData?.admin?.username
 
   const fetchGroups = async () => {
     const groups = await getGroups();
@@ -28,7 +31,7 @@ const Groups: React.FC = () => {
     // console.log("....", data);
   }, []);
 
-  const onDelete = async(group: Object) => {
+  const onDelete = async (group: Object) => {
     // console.log('....dleteatt', group);
     await deleteGroup(group)
     setData(data);
@@ -92,14 +95,14 @@ const Groups: React.FC = () => {
           <div className={styles.users}>
             Groups
           </div>
-          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup}/>} title="Add New Group">
+          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup} />} title="Add New Group">
             <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
           </Popover>
         </Header>
 
         <Content style={contentStyle}>
           <div className={styles.table}>
-            <Table columns={getColumns(onDelete, onEdit)} dataSource={data}/>
+            <Table columns={getColumns(onDelete, onEdit)} dataSource={data} />
           </div>
         </Content>
 
