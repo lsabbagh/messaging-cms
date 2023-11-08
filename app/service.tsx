@@ -33,7 +33,8 @@ export const signIn = async ({ username, password }: any) => {
         body: JSON.stringify({ username, password, authType })
     })
     const data = await response.json();
-    // console.log('....serice login', data);
+    if(!data?.token) return (alert(`${data?.message}`));
+    console.log('....service login', data);
     localStorage.setItem('token', JSON.stringify(data));
     return data;
 };
