@@ -12,7 +12,7 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
     title: "Goup Picture",
     dataIndex: "profile",
     key: "profile",
-    render: (text: string) => <span><Image src={text} width={50} height={50} style={{ borderRadius: 25 }} /></span>
+    render: (text: string) => <span><Image src={text} width={50} height={50} style={{ borderRadius: 25 }} alt=''/></span>
   },
   {
     title: "Goup Name",
