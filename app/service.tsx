@@ -32,6 +32,7 @@ export const signIn = async ({ username, password }: any) => {
         },
         body: JSON.stringify({ username, password, authType })
     })
+    console.log('....response', response);
     const data = await response.json();
     if(!data?.token) return (alert(`${data?.message}`));
     console.log('....service login', data);

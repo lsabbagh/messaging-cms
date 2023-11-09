@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "export",
-    distDir: "build",
+    // output: "export",
+    distDir: process.env.NODE_ENV === 'production' ? "build" : null,
     trailingSlash: true,
 }
 
