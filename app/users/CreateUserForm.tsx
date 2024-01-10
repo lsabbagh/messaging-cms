@@ -21,15 +21,14 @@ export type FieldType = {
 const CreateUser = () => {
   const { Option } = Select;
 
-
   const onFinish = async (values: any) => {
     await createUser(values);
 
-    // console.log("Success:", values);
+    console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo: any) => {
     // console.log("Failed:", errorInfo);
-    alert("ERROR, please try agian...")
+    alert("ERROR, please try agian...");
   };
 
   return (
@@ -121,11 +120,7 @@ const CreateUser = () => {
         <Input /> */}
       {/* </Form.Item> */}
 
-      <Form.Item<FieldType>
-        name="type"
-        hidden
-        initialValue="user"
-      >
+      <Form.Item<FieldType> name="type" hidden initialValue="user">
         <Input value="user" />
       </Form.Item>
 

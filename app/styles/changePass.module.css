@@ -1,0 +1,39 @@
+.container {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   background-color: rgba(173, 216, 230, 0.851);
+}
+
+
+.formContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   background: lightblue;
+   /* background-color: red; */
+   border: 1px solid #ccc;
+   border-radius: 14px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   height: 50%;
+   min-height: 260px;
+   width: 30%;
+   min-width: 350px;
+   max-width: 440px;
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   vertical-align: middle;
+}
+
+.formItem {
+   margin-bottom: 16px;
+   position: relative;
+   right: 15px;
+}

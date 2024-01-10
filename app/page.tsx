@@ -51,6 +51,7 @@ export default function Home() {
           <Button onClick={() => router.push('/users')} type="primary" className={styles.button}>Users</Button>
           <Button onClick={() => router.push('/groups')} type="primary" className={styles.button}>Groups</Button>
           <Button onClick={() => router.push('/admins')} type="primary" className={styles.button}>Admins</Button>
+          <Button onClick={() => router.push('/changePass')} type="primary" className={styles.button}>Password Changer</Button>
 
           <br />
           <br />

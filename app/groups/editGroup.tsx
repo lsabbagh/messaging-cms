@@ -25,7 +25,17 @@ interface propstypes {
 const EditGroup = ({group}: any) => {
     const oldParticipants = group.participants
     const oldParticipantsId = oldParticipants?.map((participant: propstypes) => participant.id);
-    // console.log('....1st', { group, oldParticipants, oldParticipantsId });
+    const oldParticipantsName = oldParticipants?.map((participant: propstypes) => participant.username);
+    const oldParticipantsObject = []
+
+    for(let i=0; i<oldParticipants.length; i++) {
+        oldParticipantsObject[i]={
+            value: oldParticipantsId[i],
+            label: oldParticipantsName[i]
+        }
+    }
+
+    console.log('....1st', { group, oldParticipants, oldParticipantsId, oldParticipantsName, oldParticipantsObject });
 
     const [users, setUsers] = React.useState([]);
 
@@ -76,13 +86,14 @@ const EditGroup = ({group}: any) => {
             <Form.Item<FieldType>
                 label="Participants"
                 name="participants"
+                initialValue={...oldParticipantsId}
                 rules={[{ required: true, message: "Please select participants!" }]}
             >
                 <Select
                     placeholder="Select an option"
                     mode="multiple"
                     allowClear
-                    defaultValue={[...oldParticipantsId]}
+                    // defaultValue={[...oldParticipantsId]}
                     options={users.map((group: any) => ({
                         value: group?._id,
                         label: group?.username,
