@@ -11,10 +11,11 @@ import { getUsers, deleteUser, getTokenData } from "../service";
 const Users: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
   const [isDeleted, setIsDeleteed] = React.useState<boolean>(false);
+  const [admin, setAdmin] = React.useState<string>('')
   // console.log("...1",deletedRow);
 
-  const storageData: Object | any = getTokenData();
-  const _username = storageData?.admin?.username;
+  // const storageData: Object | any = getTokenData();
+  // const _username = storageData?.admin?.username;
 
   const fetchUsers = async () => {
     const users = await getUsers(isDeleted);
@@ -24,6 +25,8 @@ const Users: React.FC = () => {
 
   React.useEffect(() => {
     fetchUsers();
+    const storageData: Object | any = getTokenData();
+    setAdmin(storageData?.admin?.username)
     // console.log("...", data);
   }, [isDeleted]);
 
@@ -114,7 +117,7 @@ const Users: React.FC = () => {
           </div>
         </Content>
 
-        <Footer style={footerStyle}>Admin: {_username}</Footer>
+        <Footer style={footerStyle}>Admin: {admin}</Footer>
       </Layout>
     </div>
   );

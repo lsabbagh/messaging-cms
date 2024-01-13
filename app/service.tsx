@@ -69,6 +69,8 @@ export const Logout = async (state: any) => {
   return;
 };
 
+
+
 export const getAllUsers = async () => {
   const storageData = getTokenData();
   const token = storageData?.token;
@@ -193,6 +195,8 @@ export const deleteUser = async (user: any) => {
   return data;
 };
 
+
+
 export const getGroups = async () => {
   const storageData = getTokenData();
   const token = storageData?.token;
@@ -304,6 +308,8 @@ export const deleteGroup = async (group: any) => {
   // console.log('....data', data);
   return data;
 };
+
+
 
 export const Confirm = async () => {
   const storageData = getTokenData();
