@@ -23,7 +23,7 @@ const changePass = () => {
       alert("Something went wrong! Try again later");
       return;
     }
-    alert(success);
+    alert("Password Changed");
   };
 
   const onFinishFailed = () => {};

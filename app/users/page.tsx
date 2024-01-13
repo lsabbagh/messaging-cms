@@ -14,7 +14,7 @@ const Users: React.FC = () => {
   // console.log("...1",deletedRow);
 
   const storageData: Object | any = getTokenData();
-  // const _username = storageData?.admin?.username
+  const _username = storageData?.admin?.username;
 
   const fetchUsers = async () => {
     const users = await getUsers(isDeleted);
@@ -114,7 +114,7 @@ const Users: React.FC = () => {
           </div>
         </Content>
 
-        {/* <Footer style={footerStyle}>Admin: {_username}</Footer> */}
+        <Footer style={footerStyle}>Admin: {_username}</Footer>
       </Layout>
     </div>
   );
