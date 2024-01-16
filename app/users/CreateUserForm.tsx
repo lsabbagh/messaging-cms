@@ -18,12 +18,15 @@ export type FieldType = {
   isDeleted: boolean;
 };
 
-const CreateUser = () => {
+const CreateUser = (props: any) => {
+  const { refresh } = props;
   const { Option } = Select;
+  const [form] = Form.useForm()
 
   const onFinish = async (values: any) => {
     await createUser(values);
-
+    refresh();
+    form.resetFields();
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo: any) => {

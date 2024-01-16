@@ -22,7 +22,7 @@ interface propstypes {
 }
 
 
-const EditGroup = ({group}: any) => {
+const EditGroup = ({group, onEdit}: any) => {
     const oldParticipants = group.participants
     const oldParticipantsId = oldParticipants?.map((participant: propstypes) => participant.id);
     const oldParticipantsName = oldParticipants?.map((participant: propstypes) => participant.username);
@@ -56,6 +56,7 @@ const EditGroup = ({group}: any) => {
 
         await editGroup({ id, title, participants, profile })
         // console.log("....Success",);
+        onEdit();
     };
 
     const onFinishFailed = (errorInfo: any) => {

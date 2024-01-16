@@ -11,9 +11,10 @@ export type FieldType = {
 
 interface parentData {
   dataToParent: (data: any) => void; 
+  fetchGroups: any
 }
 
-const CreateGroup = ({dataToParent}:parentData) => {
+const CreateGroup = ({dataToParent, fetchGroups}:parentData) => {
   const [users, setUsers] = React.useState<[]>([]);
 
   const fetchUsers = async () => {
@@ -35,7 +36,8 @@ const CreateGroup = ({dataToParent}:parentData) => {
       return;
     }
     const data = await createGroup({title, participants})
-    dataToParent(data)
+    dataToParent(data);
+    fetchGroups()
   };
   const onFinishFailed = (errorInfo: any) => {
     // console.log("....Failed:", errorInfo);

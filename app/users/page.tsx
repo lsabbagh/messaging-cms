@@ -14,9 +14,6 @@ const Users: React.FC = () => {
   const [admin, setAdmin] = React.useState<string>('')
   // console.log("...1",deletedRow);
 
-  // const storageData: Object | any = getTokenData();
-  // const _username = storageData?.admin?.username;
-
   const fetchUsers = async () => {
     const users = await getUsers(isDeleted);
     // console.log('....user..fetchUsers', users);
@@ -32,12 +29,19 @@ const Users: React.FC = () => {
 
   const onDelete = (user: Object) => {
     deleteUser(user);
-    setData(data);
-    // console.log('....', user)
+    setTimeout(()=>{
+      fetchUsers();
+    })
+    
+    console.log('....onDelete', user)
   };
 
   const onEdit = (user: Object) => {
-    // console.log('....', user)
+    console.log('.... onEdit1',);
+    setTimeout(()=>{
+      fetchUsers();
+    })
+    console.log('....onEdit33', user)
   };
 
   const onSwitchChange = () => {
@@ -100,7 +104,7 @@ const Users: React.FC = () => {
             onChange={onSwitchChange}
             className={styles.switch}
           />
-          <Popover content={<CreateUser />} title="Add New User">
+          <Popover content={<CreateUser refresh={fetchUsers}/>} title="Add New User">
             <Button type="primary" className={styles.addNewUserBut}>
               Add New User
             </Button>

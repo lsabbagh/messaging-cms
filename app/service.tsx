@@ -1,7 +1,7 @@
 import { getServers } from "dns";
 
-// const URL = "http://localhost:5000";
-const URL = "https://chatoo-api.onrender.com";
+const URL = "http://localhost:5000";
+// const URL = "https://chatoo-api.onrender.com";
 
 export const getTokenData = () => {
   const storageData: Object | any =
@@ -9,6 +9,16 @@ export const getTokenData = () => {
       ? JSON.parse(localStorage.getItem("token") || "{}")
       : null;
   return storageData;
+};
+
+export const getAdminToken = () => {
+  const storageData: any =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("admin") || 'false')
+      : false;
+    const admin = storageData?.isConfirmed
+    console.log('.... admin token', storageData);
+  return admin;
 };
 
 export type propsTypes = {
@@ -311,10 +321,10 @@ export const deleteGroup = async (group: any) => {
 
 
 
-export const Confirm = async () => {
+export const Confirm = async (password: string) => {
   const storageData = getTokenData();
   const token = storageData?.token;
-  const password = prompt("enter the super admin password");
+  // const password = prompt("enter the super admin password");
   const response = await fetch(URL + "/api/users/confirm", {
     method: "POST",
     headers: {
@@ -334,14 +344,17 @@ export const Confirm = async () => {
     throw new Error("Unauthorized: Logging out user");
   }
 
-  const isConfirmed = await response.json();
+  let isConfirmed = await response.json();
+  if(isConfirmed){
+    localStorage.setItem("admin", JSON.stringify({isConfirmed}));
+  }
   return isConfirmed;
 };
 
 export const getAdmins = async (isDeleted: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
-  const confirm = await Confirm();
+  const confirm = await getAdminToken();
   if (!confirm) return;
 
   const response = await fetch(URL + "/api/users/list/admins", {
@@ -369,7 +382,7 @@ export const getAdmins = async (isDeleted: any) => {
 export const createAdmin = async (values: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
-  const confirm = await Confirm();
+  const confirm = await getAdminToken();
   if (!confirm) return;
 
   const response = await fetch(URL + "/api/users/", {
@@ -394,7 +407,7 @@ export const createAdmin = async (values: any) => {
 export const editAdmin = async ({ admin, updatedAdmin }: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
-  const confirm = await Confirm();
+  const confirm = await getAdminToken();
   if (!confirm) return;
 
   const response = await fetch(URL + "/api/users/" + admin._id, {
@@ -424,7 +437,7 @@ export const editAdmin = async ({ admin, updatedAdmin }: any) => {
 export const deleteAdmin = async (admin: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
-  const confirm = await Confirm();
+  const confirm = await getAdminToken();
   if (!confirm) return;
 
   const response = await fetch(URL + "/api/users/" + admin._id, {
@@ -452,6 +465,8 @@ export const deleteAdmin = async (admin: any) => {
   const data = await response.json();
   return data;
 };
+
+
 
 export const changePassword = async ({ id, password }: any) => {
   const storageData = getTokenData();

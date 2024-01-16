@@ -4,7 +4,7 @@ import { FieldType } from "./CreateAdminForm";
 import { editAdmin } from "../service";
 
 
-const EditAdmin = ({ admin }: any) => {
+const EditAdmin = ({ admin, onEdit }: any) => {
 
     const onFinish = async (_admin: any) => {
         // console.log('1111', admin);
@@ -13,6 +13,7 @@ const EditAdmin = ({ admin }: any) => {
         const isDeleted = false;
         const updatedAdmin = { username, email, isDeleted };
         await editAdmin({ admin, updatedAdmin });
+        onEdit();
     };
 
     const onFinishFailed = (errorInfo: any) => {

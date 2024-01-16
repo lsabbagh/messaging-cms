@@ -9,6 +9,11 @@ interface DataType {
   active: boolean;
 }
 
+type columnProps = {
+  onDelete: Function, 
+  onEdit: Function,
+}
+
 const deleteWord = (record: any) => {
   const isdeleted = record.isDeleted;
   const deleteName = 'DELETE'
@@ -84,8 +89,8 @@ const getColumns = (onDelete: Function, onEdit: Function) => [
         >
           <Button type="primary">{deleteWord(record)}</Button>
         </Popconfirm>
-        <Popover content={<EditUser user={record}/>} title='edit user'>
-          <Button onClick={() => { onEdit(record)/*, console.log('....', 'record', record._id)*/ }} type="text">Edit</Button>
+        <Popover content={<EditUser user={record} onEdit={onEdit}/>} title='edit user' trigger='click'>
+          <Button  type="text">Edit</Button>
         </Popover>
 
 

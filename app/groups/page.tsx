@@ -6,18 +6,14 @@ import getColumns from "./getColumns";
 import CreateGroup from "./CreateGroupForm"
 import { useSearchParams } from "next/navigation";
 import styles from '@/app/styles/users.module.css'
-import { getGroups, deleteGroup } from "../service";
+import { getGroups, deleteGroup, getTokenData } from "../service";
 
 
 const Groups: React.FC = () => {
   const [data, setData] = React.useState<[]>([]);
-  // console.log("....1",deletedRow);
+  const [admin, setAdmin] = React.useState<string>('')
 
-  let storageData: Object | any = {}
-  if (typeof window !== 'undefined') {
-    storageData = JSON.parse(localStorage.getItem('token') || '{}');
-  }
-  const _username = storageData?.admin?.username
+  // console.log("....1",deletedRow);
 
   const fetchGroups = async () => {
     const groups = await getGroups();
@@ -26,18 +22,24 @@ const Groups: React.FC = () => {
 
   React.useEffect(() => {
     fetchGroups();
-    setData([])
-    setData(data)
+
+    const storageData: Object | any = getTokenData();
+    setAdmin(storageData?.admin?.username);
     // console.log("....", data);
   }, []);
 
   const onDelete = async (group: Object) => {
     // console.log('....dleteatt', group);
     await deleteGroup(group)
-    setData(data);
+    setTimeout(()=>{
+      fetchGroups();
+    })
     // console.log('....deletesucc')
   }
   const onEdit = (group: Object) => {
+    setTimeout(()=>{
+      fetchGroups();
+    })
     // console.log('....edit', group)
   }
 
@@ -95,7 +97,7 @@ const Groups: React.FC = () => {
           <div className={styles.users}>
             Groups
           </div>
-          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup} />} title="Add New Group">
+          <Popover content={<CreateGroup dataToParent={getDatafromCreateGroup} fetchGroups={fetchGroups}/>} title="Add New Group">
             <Button type="primary" className={styles.addNewUserBut}>Add New Group</Button>
           </Popover>
         </Header>
@@ -106,7 +108,7 @@ const Groups: React.FC = () => {
           </div>
         </Content>
 
-        <Footer style={footerStyle}>Admin: {_username}</Footer>
+        <Footer style={footerStyle}>Admin: {admin}</Footer>
 
       </Layout>
     </div>
