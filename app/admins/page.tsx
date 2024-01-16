@@ -19,7 +19,7 @@ const Admins: React.FC = () => {
 
   const retrieveSuperAdmin = () => {
     const dataString = localStorage.getItem('admin');
-    console.log('.... ',);
+    // console.log('.... ',);
     if (dataString) {
       const data: any = JSON.parse(dataString);
       setAdmin(data?.isConfirmed || false);
@@ -28,7 +28,7 @@ const Admins: React.FC = () => {
 
   const fetchAdmins = async () => {
     const admins = (admin)? await getAdmins(isDeleted): [];
-    console.log('.... fetchAdmins.................',);
+    // console.log('.... fetchAdmins.................',);
     setData(admins);
   };
 

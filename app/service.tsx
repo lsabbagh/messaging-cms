@@ -1,7 +1,7 @@
 import { getServers } from "dns";
 
-// const URL = "http://localhost:5000";
-const URL = "https://chatoo-api.onrender.com";
+const URL = "http://localhost:5000";
+// const URL = "https://chatoo-api.onrender.com";
 
 export const getTokenData = () => {
   const storageData: Object | any =
@@ -17,7 +17,7 @@ export const getAdminToken = () => {
       ? JSON.parse(localStorage.getItem("admin") || 'false')
       : false;
     const admin = storageData?.isConfirmed
-    console.log('.... admin token', storageData);
+    // console.log('.... admin token', storageData);
   return admin;
 };
 
@@ -43,10 +43,10 @@ export const signIn = async ({ username, password }: any) => {
     },
     body: JSON.stringify({ username, password, authType }),
   });
-  console.log("....response", response);
+  // console.log("....response", response);
   const data = await response.json();
   if (!data?.token) return alert(`${data?.message}`);
-  console.log("....service login", data);
+  // console.log("....service login", data);
   localStorage.setItem("token", JSON.stringify(data));
   return data;
 };

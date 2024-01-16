@@ -27,7 +27,7 @@ const CreateUser = (props: any) => {
     await createUser(values);
     refresh();
     form.resetFields();
-    console.log("Success:", values);
+    // console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo: any) => {
     // console.log("Failed:", errorInfo);

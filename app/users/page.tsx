@@ -32,16 +32,14 @@ const Users: React.FC = () => {
     setTimeout(()=>{
       fetchUsers();
     })
-    
-    console.log('....onDelete', user)
+    // console.log('....onDelete', user)
   };
 
   const onEdit = (user: Object) => {
-    console.log('.... onEdit1',);
+    // console.log('.... onEdit1',);
     setTimeout(()=>{
       fetchUsers();
     })
-    console.log('....onEdit33', user)
   };
 
   const onSwitchChange = () => {

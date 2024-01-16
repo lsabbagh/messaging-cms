@@ -35,7 +35,7 @@ const EditGroup = ({group, onEdit}: any) => {
         }
     }
 
-    console.log('....1st', { group, oldParticipants, oldParticipantsId, oldParticipantsName, oldParticipantsObject });
+    // console.log('....1st', { group, oldParticipants, oldParticipantsId, oldParticipantsName, oldParticipantsObject });
 
     const [users, setUsers] = React.useState([]);
 

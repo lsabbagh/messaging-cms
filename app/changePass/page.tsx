@@ -17,7 +17,7 @@ const changePass = () => {
       return;
     }
     const isChanged = await changePassword({ id, password });
-    console.log(".... ", isChanged);
+    // console.log(".... ", isChanged);
     const { success } = isChanged;
     if (!success) {
       alert("Something went wrong! Try again later");

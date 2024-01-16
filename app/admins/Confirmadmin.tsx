@@ -7,9 +7,9 @@ type FieldType = {
 };
 
 const Confirmadmin = ({ setAdmin }: any) => {
-  
+
   const onFinish = async (values: any) => {
-    console.log(".... onFinish");
+    // console.log(".... onFinish");
     const { password } = values;
 
     const response = await Confirm(password);
@@ -18,10 +18,9 @@ const Confirmadmin = ({ setAdmin }: any) => {
     setTimeout(() => {
       localStorage.removeItem("admin");
       setAdmin(false);
-      console.log(".... Confirmadmin..setTimeout..fetchAdmins");
+      // console.log(".... Confirmadmin..setTimeout..fetchAdmins");
     }, 60000);
 
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
