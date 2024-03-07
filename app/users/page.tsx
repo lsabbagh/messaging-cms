@@ -102,7 +102,7 @@ const Users: React.FC = () => {
             onChange={onSwitchChange}
             className={styles.switch}
           />
-          <Popover content={<CreateUser refresh={fetchUsers}/>} title="Add New User">
+          <Popover content={<CreateUser refresh={fetchUsers}/>} title="Add New User" trigger="click">
             <Button type="primary" className={styles.addNewUserBut}>
               Add New User
             </Button>
@@ -115,6 +115,7 @@ const Users: React.FC = () => {
               columns={getColumns(onDelete, onEdit)}
               dataSource={data}
               footer={() => <div style={{ textAlign: "center" }}></div>}
+              pagination={{pageSize: 8}}
             />
           </div>
         </Content>

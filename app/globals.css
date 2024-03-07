@@ -8,6 +8,23 @@
   --background-end-rgb: 255, 255, 255; */
 }
 
+.ant-table {
+ background-color: yellowgreen;
+ display: flex;
+ flex-direction: column;
+ position: relative;
+}
+
+.ant-table .ant-table-tbody {
+  /* background-color: red; */
+  position: relative;
+}
+
+.ant-table .ant-table-cell {
+  /* background-color: blue; */
+  position: absolute;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     

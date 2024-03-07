@@ -129,7 +129,7 @@ const Admins: React.FC = () => {
             )}
           </div>
           <Popover
-            content={<CreateAdmin />}
+            content={admin? <CreateAdmin />: "Enter Super Admin Password"}
             title="Add New Admin"
             trigger="click"
           >
@@ -146,8 +146,8 @@ const Admins: React.FC = () => {
             <Table
               columns={getColumns(onDelete, onEdit)}
               dataSource={data}
-              style={{ minWidth: "600px" }}
               footer={() => <div style={{ textAlign: "center" }}></div>}
+              pagination={{pageSize: 8}}
             />
           </div>
           }

@@ -21,6 +21,7 @@ export const getAdminToken = () => {
   return admin;
 };
 
+
 export type propsTypes = {
   username: any; //string,
   password: any; //string,
@@ -33,15 +34,18 @@ export type propsTypes = {
   isDeleted: any; //boolean,
 };
 
+
+
 export const signIn = async ({ username, password }: any) => {
-  const authType = "cms";
+  const authtype = "cms";
+  // console.log('.... signIn',{ username, password, authtype });
   const response = await fetch(URL + "/api/admin/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
     },
-    body: JSON.stringify({ username, password, authType }),
+    body: JSON.stringify({ username, password, authtype }),
   });
   // console.log("....response", response);
   const data = await response.json();
@@ -55,15 +59,15 @@ export const Logout = async (state: any) => {
   const admin = state?.admin;
   const userId = admin?._id;
   const token = state?.token;
-  const authType = "cms";
-  // console.log('....logout began', { userId, token, authType });
+  const authtype = "cms";
+  // console.log('....logout began', { userId, token, authtype });
   const response = await fetch(URL + "/api/logout/" + userId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
     },
-    body: JSON.stringify({ authType }),
+    body: JSON.stringify({ authtype }),
   });
   // console.log('....logout res', response);
   if (!response.ok) {
@@ -81,14 +85,16 @@ export const Logout = async (state: any) => {
 
 
 
+
 export const getAllUsers = async () => {
   const storageData = getTokenData();
   const token = storageData?.token;
   const response = await fetch(URL + "/api/users/list", {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
   });
@@ -108,12 +114,13 @@ export const getUsers = async (isDeleted: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
   const response = await fetch(URL + "/api/users/list/users", {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
-      isDeleted: isDeleted,
+      isdeleted: isDeleted,
     },
   });
 
@@ -131,12 +138,13 @@ export const getUsers = async (isDeleted: any) => {
 export const createUser = async (data: any) => {
   const storageData = getTokenData();
   const token = storageData?.token;
+  console.log('.... creating user', data);
   const response = await fetch(URL + "/api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify(data),
@@ -148,6 +156,13 @@ export const createUser = async (data: any) => {
     localStorage.removeItem("token");
     throw new Error("Unauthorized: Logging out user");
   }
+
+  if(response.status === 402 || response.status === 406){
+    const data = response.json;
+    console.log('.... data',data, {response, data});
+  }
+
+  console.log('.... createUser..response', response.json());
 };
 
 export const editUser = async ({ user, updatedUser }: any) => {
@@ -158,7 +173,7 @@ export const editUser = async ({ user, updatedUser }: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify(updatedUser),
@@ -184,7 +199,7 @@ export const deleteUser = async (user: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({
@@ -214,7 +229,7 @@ export const getGroups = async () => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
   });
@@ -239,7 +254,7 @@ export const createGroup = async ({ title, participants }: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({
@@ -271,7 +286,7 @@ export const editGroup = async ({ id, title, participants, profile }: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({ title, participants, profile }),
@@ -300,7 +315,7 @@ export const deleteGroup = async (group: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({ type: "group" }),
@@ -330,7 +345,7 @@ export const Confirm = async (password: string) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({ password }),
@@ -358,10 +373,12 @@ export const getAdmins = async (isDeleted: any) => {
   if (!confirm) return;
 
   const response = await fetch(URL + "/api/users/list/admins", {
+
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
       isDeleted: isDeleted,
     },
@@ -390,7 +407,7 @@ export const createAdmin = async (values: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify(values),
@@ -415,7 +432,7 @@ export const editAdmin = async ({ admin, updatedAdmin }: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify(updatedAdmin),
@@ -445,7 +462,7 @@ export const deleteAdmin = async (admin: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({
@@ -476,7 +493,7 @@ export const changePassword = async ({ id, password }: any) => {
     headers: {
       "Content-Type": "application/json",
       "access-control-allow-origin": "*",
-      authType: "cms",
+      authtype: "cms",
       token: token,
     },
     body: JSON.stringify({ id, password }),

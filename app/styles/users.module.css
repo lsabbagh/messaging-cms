@@ -7,6 +7,14 @@
     width: 100%;
 }
 
+.ant-table .ant-table-tbody {
+    background-color: red;
+  }
+  
+  .ant-table .ant-table-cell {
+    background-color: blue;
+  }
+
 .layout {
     width: 100%;
     margin-bottom: 15px;

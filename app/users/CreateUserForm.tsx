@@ -24,7 +24,8 @@ const CreateUser = (props: any) => {
   const [form] = Form.useForm()
 
   const onFinish = async (values: any) => {
-    await createUser(values);
+    const {remember, userData} = values
+    await createUser(userData);
     refresh();
     form.resetFields();
     // console.log("Success:", values);

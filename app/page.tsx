@@ -9,6 +9,8 @@ import styles from "@/app/styles/app.module.css"
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 // import 'antd/dist/antd';
 
+// if the number of users is big the cms page is flowing down instead of pagination. fix it
+
 if(process.env.NODE_ENV === 'production') disableReactDevTools();
 
 export default function Home() {

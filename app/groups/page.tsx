@@ -104,7 +104,11 @@ const Groups: React.FC = () => {
 
         <Content style={contentStyle}>
           <div className={styles.table}>
-            <Table columns={getColumns(onDelete, onEdit)} dataSource={data} />
+            <Table 
+              columns={getColumns(onDelete, onEdit)} 
+              dataSource={data} 
+              pagination={{pageSize: 8}}
+            />
           </div>
         </Content>
 
